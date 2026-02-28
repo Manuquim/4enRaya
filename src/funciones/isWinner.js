@@ -1,65 +1,54 @@
 //Funcion para encontrar combinacion ganadora y ganador si hay
-export const isWinner = (x,fila,col)=>
-{
-  let aux=x[fila][col];
-    if(aux ==='x' || aux==='o')
-    {
-      //Horizontal derecha
-      if((col+3)<7)
-      {
-        if(aux===x[fila][col+1]&&aux===x[fila][col+2]&&aux===x[fila][col+3])
-        return aux;
-      }
-      //Horizontal izquierda
-      if(col-3>=0)
-      {
-        if((aux===x[fila][(col-1)])&&(aux===x[fila][(col-2)])&&(aux===x[fila][(col-3)]))
-        return aux;
-      }
-      //Vertical arriba
-      if((fila-3)>=0)
-      {
-        if((aux===x[fila-1][col])&&(aux===x[fila-2][col])&&(aux===x[fila-3][col]))
-        return aux;
-      }
-      //Vertical abajo
-      if((fila+3)<6)
-      {
-        if(aux===x[fila+1][col]&&aux===x[fila+2][col]&&aux===x[fila+3][col])
-        return aux;
-      }
-      //Diagonal arriba derecha
-      if((fila-3)>=0&&(col+3)<7)
-      {
-        if(aux===x[fila-1][col+1]&&aux===x[fila-2][col+2]&&aux===x[fila-3][col+3])
-        return aux;
-      }
-      //Diagonal arriba izquierda
-      if(((fila-3)>=0) && ((col-3)>=0))
-      {
-        if(aux===x[fila-1][col-1]&&aux===x[fila-2][col-2]&&aux===x[fila-3][col-3])
-        return aux;
-      }
-      //Diagonal abajo derecha
-      if(((fila+3)<6) && ((col+3)<7))
-      {
-        if(aux===x[fila+1][col+1]&&aux===x[fila+2][col+2]&&aux===x[fila+3][col+3])
-        return aux;
-      }
-       //Diagonal abajo izquda
-      if(((fila+3)<6) && ((col-3)>=0))
-      {
-        if(aux===x[fila+1][col-1]&&aux===x[fila+2][col-2]&&aux===x[fila+3][col-3])
-          return aux;
-      }
+const DIRECCIONES = [
+  [0, 1],
+  [1, 0],
+  [1, 1],
+  [1, -1]
+];
+
+const contarFichas = (tablero, fila, col, deltaFila, deltaCol, ficha) => {
+  let total = 0;
+  let nuevaFila = fila + deltaFila;
+  let nuevaCol = col + deltaCol;
+
+  while (
+    nuevaFila >= 0 && nuevaFila < 6 &&
+    nuevaCol >= 0 && nuevaCol < 7 &&
+    tablero[nuevaFila][nuevaCol] === ficha
+  ) {
+    total += 1;
+    nuevaFila += deltaFila;
+    nuevaCol += deltaCol;
+  }
+
+  return total;
+};
+
+export const isWinner = (tablero, fila, col) => {
+  const ficha = tablero[fila][col];
+
+  if (ficha !== 'x' && ficha !== 'o') {
+    return '0';
+  }
+
+  for (const [deltaFila, deltaCol] of DIRECCIONES) {
+    const consecutivas = 1 +
+      contarFichas(tablero, fila, col, deltaFila, deltaCol, ficha) +
+      contarFichas(tablero, fila, col, -deltaFila, -deltaCol, ficha);
+
+    if (consecutivas >= 4) {
+      return ficha;
     }
+  }
+
   return '0';
-}
+};
 
 export const tablas = (x) => {
-  let tablas=true;
-  for(let i=0; i<7;i++)
-    if(x[0][i]==='W') tablas=false;
-  
+  let tablas = true;
+  for (let i = 0; i < 7; i++) {
+    if (x[0][i] === 'W') tablas = false;
+  }
+
   return tablas;
-}
+};
