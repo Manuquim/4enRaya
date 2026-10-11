@@ -12,7 +12,7 @@ Descarga el ZIP desde **Code → Download ZIP** en GitHub y extrae su contenido.
 
 | Sistema | Iniciar | Apagar |
 | --- | --- | --- |
-| Windows | Doble clic en **run.vbs**; alternativa: **run.cmd** | Botón **Apagar juego** o **detener.cmd** |
+| Windows | Doble clic en **run.cmd**; opcional: **run.vbs** sin consola | Botón **Apagar juego** o **detener.cmd** |
 | Linux | **Run.desktop** si tu escritorio lo admite; alternativa: `sh iniciar.sh` | Botón **Apagar juego**, **Detener.desktop** o `sh detener.sh` |
 | Ambos, desde terminal | `node run` | `node run --stop` |
 
@@ -45,8 +45,8 @@ El ZIP del repositorio incluye todo lo necesario para jugar, excepto Node.js. Si
 
 1. Haz clic derecho sobre el ZIP y selecciona **Extraer todo**.
 2. Abre la carpeta extraída donde aparece **run.vbs**.
-3. Haz doble clic en **run.vbs**. Arranca el servidor oculto y abre el navegador, sin escribir comandos ni mantener PowerShell abierto. Necesitas Node.js instalado previamente.
-4. Si Windows no admite scripts VBS, usa **run.cmd** o **iniciar.cmd**: abren una consola breve que se cierra al iniciar; en caso de error permanece abierta para mostrarlo.
+3. Haz doble clic en **run.cmd**. Arranca el servidor en segundo plano y abre el navegador. La consola se cierra tras arrancar; no tienes que mantener PowerShell abierto. Necesitas Node.js instalado previamente.
+4. **run.vbs** es una alternativa sin consola si Windows permite ejecutar VBScript. Ambos buscan Node.js en PATH y en sus ubicaciones habituales. Si el VBS muestra un error, abre **run.cmd** para ver la causa concreta. **iniciar.cmd** también usa el mismo lanzador.
 5. Para finalizar, pulsa **Apagar juego** en la página o ejecuta **detener.cmd**.
 
 ### Linux
@@ -88,6 +88,7 @@ En **GitHub Pages**, un servidor estático o el modo de desarrollo con Vite, el 
 - **El puerto 8080 está ocupado:** cierra el otro servidor del juego o la aplicación que lo está usando y vuelve a iniciar.
 - **El navegador no se abre:** entra manualmente en http://127.0.0.1:8080/; en Linux comprueba que xdg-open esté disponible.
 - **Error al iniciar:** usa run.cmd en Windows o `node run` en una terminal para ver el mensaje. El servidor registra errores en servidor.log.
+- **run.vbs muestra «No se pudo iniciar»:** usa run.cmd. Descarga y extrae el ZIP actualizado completo, comprueba Node.js 18 o posterior y revisa si otro programa ocupa el puerto 8080. El archivo run sin extensión contiene JavaScript y se ejecuta con Node.js; no es un acceso de Windows para doble clic.
 - **Se muestra una versión antigua:** detén el servidor anterior antes de iniciar una descarga nueva.
 - **Faltan archivos:** extrae el ZIP completo; conserva run, dist y scripts junto a los lanzadores.
 
