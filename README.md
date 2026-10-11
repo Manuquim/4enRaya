@@ -46,3 +46,5 @@ Es una confirmación manual de la imagen transmitida, no una detección automát
 Ficha oficial: https://www.mi.com/global/product/xiaomi-tv-a-43-2025/specs/
 
 La conexión se abre desde **Menú → Conectar / probar TV**. Al confirmar el código se cierra la configuración y queda solo la partida con el botón inferior **Desconectar PC de la TV**. Ese botón explica cómo detener la transmisión en Chrome y permite volver a la vista normal sin reiniciar la partida. Chrome controla la duplicación de pestañas, por lo que la web no puede detenerla directamente. **Vista TV** también se encuentra dentro del menú.
+
+La vista TV aprovecha las pantallas panorámicas: tablero grande a la izquierda y turno, jugadas y nueva partida a la derecha. Las fichas conservan su forma circular. La desconexión queda centrada debajo. En ventanas verticales el diseño vuelve a una columna y en pantallas horizontales de poca altura reduce los márgenes.
