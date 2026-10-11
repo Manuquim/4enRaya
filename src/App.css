@@ -156,3 +156,7 @@
 
 .app:not(.tv-mode) dialog.tv-connection{bottom:auto;padding:0;color:#edf0f5;background:#253040}
 dialog.tv-connection::backdrop{background:#0008}
+
+dialog.how-to-play{position:fixed;top:64px;bottom:auto;left:16px;right:16px;width:auto;max-width:780px;max-height:calc(100dvh - 84px);margin:0 auto;padding:0;overflow:auto;border:1px solid #40516b;border-radius:12px;background:#253040;color:#edf0f5;box-shadow:0 18px 50px #0008}
+dialog.how-to-play::backdrop{background:#0008}
+dialog.how-to-play .help{margin:0;border-radius:0}
