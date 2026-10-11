@@ -71,11 +71,10 @@ export default function App() {
     {!(tv || connected) && <header className="topbar"><a className="brand" href="./"><span className="brand-mark">4</span> en raya<span className="accent">.</span></a><div className="header-actions"><button className="quiet" onClick={() => setMenu(!menu)} aria-expanded={menu} aria-controls="game-menu">☰ Menú</button></div></header>}
     {menu && !(tv || connected) && <nav id="game-menu" className="game-menu" aria-label="Opciones del juego">
       <button className="quiet" onClick={() => { setHelp(!help); setConnectionOpen(false); setMenu(false); }}>Cómo jugar</button>
-      <button className="quiet" onClick={() => { setConnectionOpen(true); setHelp(false); setMenu(false); }}>Conectar a una TV</button>
-      <button className="quiet" onClick={() => { setHelp(false); setConnectionOpen(false); setMenu(false); toggleTv(); }}>Vista TV</button>
+      <button className="quiet" onClick={() => { setConnectionOpen(true); setHelp(false); setMenu(false); }}>TV</button>
     </nav>}
     {help && <aside className="help"><strong>Una regla. Muchas posibilidades.</strong><p>Dos personas se turnan para dejar caer fichas. Conecta cuatro en horizontal, vertical o diagonal. Pulsa una columna, o usa Tab, las flechas y Enter.</p><p><strong>En tu TV:</strong> conecta el ordenador por HDMI o duplica la pantalla con la función de transmisión de tu dispositivo. Activa Vista TV para ampliar el tablero. Este botón no conecta por sí solo con el televisor.</p></aside>}
-    {connectionOpen && !(tv || connected) && <TvConnection onConnected={confirmTv} onClose={() => setConnectionOpen(false)} />}
+    {connectionOpen && !(tv || connected) && <TvConnection onConnected={confirmTv} onClose={() => setConnectionOpen(false)} onViewOnly={() => { setConnectionOpen(false); setHelp(false); setMenu(false); toggleTv(); }} />}
     <div className="play-layout"><aside className="scorecard" aria-label="Turno, marcador y controles">
       {!isTv && turnDisplay}
       <h2>Marcador</h2>
