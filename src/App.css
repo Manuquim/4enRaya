@@ -152,3 +152,4 @@
   .app:not(.tv-mode) .scorecard{padding:10px;width:calc(100% - 16px)}
   .app:not(.tv-mode) .board-wrap{width:min(100%,calc(max(170px,100dvh - 115px)*7/6))}
 }
+.tv-method-label{display:block;margin-bottom:8px;font-weight:600}.tv-method{display:block;width:100%;max-width:480px;padding:12px;background:#101722;color:#edf0f5;border:1px solid #657182;border-radius:8px;font:inherit}.tv-method:focus-visible{outline:3px solid #f4c56b;outline-offset:3px}.tv-guide{font-size:13px;text-decoration:underline;text-underline-offset:3px}

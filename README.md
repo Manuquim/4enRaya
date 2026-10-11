@@ -19,11 +19,33 @@ Pulsa un hueco o la flecha de una columna. Con teclado: Tab para enfocar, flecha
 
 Nueva partida conserva el marcador. Reiniciar marcador y partida lo pone a cero. El marcador dura mientras la página esté abierta.
 
-## TV
+En PC, el 20 % izquierdo de la zona de juego contiene turno, marcador y controles; el 80 % restante se reserva para el tablero, cuyo tamaño se ajusta a la altura disponible. En ventanas estrechas los controles se agrupan sobre el tablero. El menú y la configuración se abren en paneles superpuestos.
 
-Conecta el ordenador por HDMI o duplica la pantalla con las funciones de tu dispositivo. Pulsa Vista TV para ampliar el tablero y solicitar pantalla completa. Escape sale de pantalla completa. Si el navegador no la admite, se conserva el diseño ampliado y aparece un aviso.
+## Conectar a una TV
 
-Vista TV no descubre televisores ni transmite directamente a Chromecast o AirPlay; la duplicación depende del sistema y del televisor.
+Abre **Menú → Conectar a una TV** y elige el método. No se restringe la marca ni el modelo; cada dispositivo debe admitir el método elegido.
+
+- **Google Cast / Chromecast:** conecta PC y TV a la misma Wi-Fi. En Chrome usa Transmitir → Transmitir pestaña y elige la TV. La Xiaomi TV A 2025 es un ejemplo de TV con Chromecast integrado; otros modelos compatibles también sirven.
+- **Miracast:** PC y TV deben admitirlo. Activa la pantalla inalámbrica en la TV y conéctala desde Windows con Win + K. Usa Win + P → Duplicar para ver la misma imagen.
+- **HDMI:** conecta el cable, selecciona la entrada en la TV y usa Win + P → Duplicar en Windows.
+
+La web ofrece instrucciones; la conexión se establece desde Chrome, Windows o el cable. No descubre televisores ni inicia o detiene automáticamente la transmisión.
+
+## Test visual
+
+Genera un código de cuatro cifras válido durante 60 segundos y una señal animada. Mira el código en la TV y confírmalo desde el PC. Los códigos incorrectos y las pruebas caducadas se rechazan. Al confirmar se cierra la configuración y queda la partida con el botón inferior **Desconectar PC de la TV**. Coloca una ficha para comprobar que la imagen sigue actualizándose.
+
+Es una confirmación manual de la imagen, no una detección automática ni una prueba bidireccional del mando. Cambiar de método elimina la prueba anterior. Las jugadas se hacen desde el PC.
+
+El botón de desconexión explica cómo detener la conexión según el método elegido y vuelve a la vista normal tras tu confirmación, sin reiniciar la partida.
+
+La vista TV usa un tablero grande a la izquierda y los controles a la derecha en pantallas panorámicas. Conserva fichas circulares y adapta el diseño a ventanas verticales o de poca altura. **Menú → Vista TV** solicita también pantalla completa; Escape sale de ella. Si el navegador no la admite, se mantiene la vista ampliada.
+
+Guías oficiales:
+
+- Google Cast: https://support.google.com/chromecast/answer/3228332?hl=es
+- Miracast en Windows: https://support.microsoft.com/en-gb/windows/hardware/display-graphics/screen-mirroring-and-projecting-to-your-pc-or-wireless-display
+- Xiaomi TV A 2025: https://www.mi.com/global/product/xiaomi-tv-a-43-2025/specs/
 
 ## Validación y compilación
 
@@ -33,24 +55,4 @@ npm run lint
 npm run build
 ```
 
-La carpeta dist contiene la web estática. La base relativa permite servirla bajo /4enRaya/. Los cambios locales no se publican automáticamente en GitHub Pages.
-
-## Xiaomi TV A 2025: prueba por Wi-Fi
-
-Este modelo incluye Chromecast integrado. Conecta TV y PC a la misma Wi-Fi, abre el juego en Chrome y usa el menú Transmitir para transmitir la pestaña a la Xiaomi.
-
-El botón **Conectar / probar TV** ofrece las instrucciones y un test visual: genera un código de cuatro cifras válido durante 60 segundos y una señal animada. Mira el código en la TV y confírmalo desde el PC. Si coincide, el juego muestra «Imagen confirmada por ti». Después coloca una ficha para comprobar que la imagen sigue actualizándose.
-
-Es una confirmación manual de la imagen transmitida, no una detección automática ni un test bidireccional del mando de la TV. No requiere servidor de red ni permisos de firewall: Chrome transmite la pestaña. La prueba caduca y los códigos incorrectos se rechazan. Sin una TV real conectada no se puede validar la transmisión física.
-
-Ficha oficial: https://www.mi.com/global/product/xiaomi-tv-a-43-2025/specs/
-
-La conexión se abre desde **Menú → Conectar / probar TV**. Al confirmar el código se cierra la configuración y queda solo la partida con el botón inferior **Desconectar PC de la TV**. Ese botón explica cómo detener la transmisión en Chrome y permite volver a la vista normal sin reiniciar la partida. Chrome controla la duplicación de pestañas, por lo que la web no puede detenerla directamente. **Vista TV** también se encuentra dentro del menú.
-
-La vista TV aprovecha las pantallas panorámicas: tablero grande a la izquierda y turno, jugadas y nueva partida a la derecha. Las fichas conservan su forma circular. La desconexión queda centrada debajo. En ventanas verticales el diseño vuelve a una columna y en pantallas horizontales de poca altura reduce los márgenes.
-
-En PC el diseño es compacto y el tamaño del tablero depende de la altura útil del navegador. El menú, la ayuda y la configuración de TV se abren como paneles superpuestos con desplazamiento interno, para no empujar el juego fuera de la ventana. En ventanas de poca altura se ocultan los textos decorativos; en móvil se conserva una columna.
-
-El tablero del PC queda a la izquierda y dispone de casi toda la altura útil. Turno, jugadas, marcador y botones comparten un panel lateral derecho. Se retiran el título decorativo y el pie de página para ganar superficie de juego. En móvil el panel se convierte en una franja compacta sobre el tablero.
-
-La distribución de escritorio reserva un 20 % de la zona de juego para información y controles a la izquierda y el 80 % restante para el tablero. El tablero se centra en su zona y se amplía hasta el límite de la altura útil, conservando fichas circulares y las seis filas visibles.
+La carpeta dist contiene la web estática. La base relativa permite servirla bajo /4enRaya/. Los cambios locales y la subida del código a GitHub no sustituyen por sí solos un proceso de despliegue de dist. Sin una TV real conectada no se puede validar la transmisión física.

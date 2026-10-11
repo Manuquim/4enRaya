@@ -15,6 +15,7 @@ export default function App() {
   const [menu, setMenu] = useState(false);
   const [connectionOpen, setConnectionOpen] = useState(false);
   const [connected, setConnected] = useState(false);
+  const [connectionMethod, setConnectionMethod] = useState('cast');
   const disconnectDialog = useRef(null);
   const columns = useRef([]);
   const lock = useRef(false);
@@ -47,7 +48,8 @@ export default function App() {
     try { await document.documentElement.requestFullscreen(); }
     catch { setNotice('Vista TV activada. Pantalla completa no disponible en este navegador.'); }
   }
-  function confirmTv() {
+  function confirmTv(method) {
+    setConnectionMethod(method);
     setConnected(true);
     setConnectionOpen(false);
     setMenu(false);
@@ -69,7 +71,7 @@ export default function App() {
     {!(tv || connected) && <header className="topbar"><a className="brand" href="./"><span className="brand-mark">4</span> en raya<span className="accent">.</span></a><div className="header-actions"><button className="quiet" onClick={() => setMenu(!menu)} aria-expanded={menu} aria-controls="game-menu">☰ Menú</button></div></header>}
     {menu && !(tv || connected) && <nav id="game-menu" className="game-menu" aria-label="Opciones del juego">
       <button className="quiet" onClick={() => { setHelp(!help); setConnectionOpen(false); setMenu(false); }}>Cómo jugar</button>
-      <button className="quiet" onClick={() => { setConnectionOpen(true); setHelp(false); setMenu(false); }}>Conectar / probar TV</button>
+      <button className="quiet" onClick={() => { setConnectionOpen(true); setHelp(false); setMenu(false); }}>Conectar a una TV</button>
       <button className="quiet" onClick={() => { setHelp(false); setConnectionOpen(false); setMenu(false); toggleTv(); }}>Vista TV</button>
     </nav>}
     {help && <aside className="help"><strong>Una regla. Muchas posibilidades.</strong><p>Dos personas se turnan para dejar caer fichas. Conecta cuatro en horizontal, vertical o diagonal. Pulsa una columna, o usa Tab, las flechas y Enter.</p><p><strong>En tu TV:</strong> conecta el ordenador por HDMI o duplica la pantalla con la función de transmisión de tu dispositivo. Activa Vista TV para ampliar el tablero. Este botón no conecta por sí solo con el televisor.</p></aside>}
@@ -90,9 +92,11 @@ export default function App() {
     {(tv || connected) && <div className="tv-bottom"><button className="quiet" onClick={() => connected ? disconnectDialog.current.showModal() : toggleTv()}>{connected ? 'Desconectar PC de la TV' : 'Salir de Vista TV'}</button></div>}
     <dialog ref={disconnectDialog} className="disconnect-dialog" aria-labelledby="disconnect-title">
       <h2 id="disconnect-title">Desconectar de la TV</h2>
-      <p>En Chrome, abre <strong>Transmitir</strong> y pulsa <strong>Detener transmisión</strong>. Después confirma aquí para volver a la vista normal.</p>
+      {connectionMethod === 'cast' && <p>En Chrome, abre <strong>Transmitir</strong> y pulsa <strong>Detener transmisión</strong>. Después confirma aquí para volver a la vista normal.</p>}
+      {connectionMethod === 'miracast' && <p>En Windows, pulsa <strong>Win + K</strong> y elige <strong>Desconectar</strong>. Después confirma aquí para volver a la vista normal.</p>}
+      {connectionMethod === 'hdmi' && <p>En Windows, pulsa <strong>Win + P → Solo pantalla de PC</strong>, o desconecta el cable HDMI. Después confirma aquí para volver a la vista normal.</p>}
       <p>La partida se conserva.</p>
-      <div className="dialog-actions"><button className="quiet" onClick={() => disconnectDialog.current.close()}>Cancelar</button><button className="primary" onClick={disconnectTv}>He detenido la transmisión</button></div>
+      <div className="dialog-actions"><button className="quiet" onClick={() => disconnectDialog.current.close()}>Cancelar</button><button className="primary" onClick={disconnectTv}>Ya he desconectado</button></div>
     </dialog>
   </main>;
 }
