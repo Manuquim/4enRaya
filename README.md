@@ -8,22 +8,32 @@ El repositorio incluye **dist**, con el frontend precompilado. Funciona en Windo
 
 ### Inicio rápido
 
-Descarga el ZIP desde **Code → Download ZIP** en GitHub y extrae su contenido. Con Node.js instalado:
+Descarga el paquete precompilado desde [Releases de GitHub](https://github.com/Manuquim/4enRaya/releases): [Windows](https://github.com/Manuquim/4enRaya/releases/download/v1.0.0/cuatro-en-raya-windows.zip) o [Linux](https://github.com/Manuquim/4enRaya/releases/download/v1.0.0/cuatro-en-raya-linux.zip). Extrae el ZIP completo. Necesitas Node.js instalado previamente.
+
+La carpeta extraída solo muestra el lanzador y una carpeta app:
+
+```text
+Windows:                  Linux:
+run.vbs                   Run.desktop
+app/                      app/
+```
+
+En Windows, haz doble clic en **run.vbs**. En Linux, abre **Run.desktop** si tu entorno lo permite. Todos los archivos auxiliares, el README y los lanzadores alternativos quedan dentro de **app**. No muevas el lanzador fuera de su carpeta ni borres app.
 
 | Sistema | Iniciar | Apagar |
 | --- | --- | --- |
-| Windows | Doble clic en **run.cmd**; opcional: **run.vbs** sin consola | Botón **Apagar juego** o **detener.cmd** |
-| Linux | **Run.desktop** si tu escritorio lo admite; alternativa: `sh iniciar.sh` | Botón **Apagar juego**, **Detener.desktop** o `sh detener.sh` |
-| Ambos, desde terminal | `node run` | `node run --stop` |
+| Windows | Doble clic en **run.vbs**; alternativa: **app/run.cmd** | Botón **Apagar juego** o **app/detener.cmd** |
+| Linux | **Run.desktop** si tu escritorio lo admite; alternativa: `sh app/iniciar.sh` | Botón **Apagar juego**, **app/Detener.desktop** o `sh app/detener.sh` |
+| Ambos, desde terminal | `node app/run` | `node app/run --stop` |
 
 El navegador se abre automáticamente y el servidor queda en segundo plano. No tienes que mantener una terminal abierta.
 
 ### Un único archivo run para Windows y Linux
 
-El mismo ZIP sirve para ambos sistemas. Una vez extraído, abre una terminal en la carpeta que contiene el archivo **run** y ejecuta:
+Ambos paquetes usan internamente el mismo archivo run, ubicado dentro de app. Si prefieres usar una terminal desde la carpeta extraída, ejecuta:
 
 ```sh
-node run
+node app/run
 ```
 
 El lanzador inicia el servidor en segundo plano y abre **http://127.0.0.1:8080/** en el navegador automáticamente. Puedes cerrar la terminal. Si el juego ya está iniciado, reutiliza el servidor. Para detenerlo ejecuta `node run --stop`.
@@ -34,12 +44,16 @@ Para iniciar con doble clic en Windows usa **run.vbs** (sin consola) o **run.cmd
 
 ### Descargar el juego
 
+Para jugar con la estructura compacta usa los ZIP de **Releases**, indicados arriba. **Code → Download ZIP** descarga el código de desarrollo y mantiene la estructura original del repositorio. Si eliges esa descarga:
+
 1. Abre [el repositorio en GitHub](https://github.com/Manuquim/4enRaya).
 2. Selecciona la rama **gh-pages** si no está ya seleccionada.
 3. Pulsa el botón verde **Code → Download ZIP**.
 4. Extrae el ZIP antes de ejecutar el juego. Dentro encontrarás dist, scripts y los lanzadores.
 
 El ZIP del repositorio incluye todo lo necesario para jugar, excepto Node.js. Si ya lo tienes instalado, no tienes que instalar nada más. Comprueba la versión con `node --version` en una terminal; debe ser 18 o posterior.
+
+Las instrucciones siguientes que usan run.cmd, iniciar.sh o detener.cmd directamente se refieren a la carpeta interna **app** en los paquetes compactos, o a la raíz si descargaste el código con Code → Download ZIP.
 
 ### Windows
 
@@ -95,7 +109,7 @@ En **GitHub Pages**, un servidor estático o el modo de desarrollo con Vite, el 
 
 También puedes alojar el contenido de dist en cualquier servidor web estático. En ese caso, los jugadores solo necesitan un navegador; no requieren Node.js ni paquetes.
 
-El archivo compacto de distribución cuatro-en-raya.zip, si se facilita por separado, contiene run, dist, scripts y los lanzadores de Windows y Linux. **Download ZIP** de GitHub descarga el repositorio completo. Abre el juego mediante el servidor: abrir index.html directamente como archivo puede bloquear los módulos JavaScript.
+El archivo cuatro-en-raya.zip, si se facilita por separado, es el paquete compacto de Windows. Los archivos cuatro-en-raya-windows.zip y cuatro-en-raya-linux.zip contienen un único lanzador exterior y el resto dentro de app. Abre el juego mediante el servidor: abrir index.html directamente como archivo puede bloquear los módulos JavaScript.
 
 El arranque no instala servicios, tareas programadas ni modifica la política de PowerShell. El servidor dura hasta que lo detienes o reinicias el equipo. Para ejecutarlo en primer plano y cerrarlo con Ctrl+C, usa `node scripts/serve-dist.mjs`.
 
@@ -154,6 +168,8 @@ npm run build
 ```
 
 La carpeta dist contiene la web estática y se incluye en Git. La base relativa permite servirla bajo /4enRaya/. Después de modificar el código, ejecuta `npm run build` y sube también los cambios de dist para actualizar la versión precompilada. La subida a GitHub no sustituye por sí sola el despliegue del contenido de dist. Sin una TV real conectada no se puede validar la transmisión física.
+
+Para generar los paquetes compactos después de compilar, ejecuta `node scripts/package.mjs`. En Windows usa el compresor incluido en PowerShell; en Linux requiere el comando zip. Estas herramientas solo son necesarias para generar los paquetes, no para jugar.
 
 Los paneles **TV** y **Cómo jugar** son ventanas modales: se cierran al pulsar fuera, con Escape o con su botón de cierre. Mientras están abiertos bloquean el tablero, de modo que el clic exterior no coloca fichas. El foco de teclado permanece dentro del panel.
 

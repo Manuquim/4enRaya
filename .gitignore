@@ -9,6 +9,9 @@ lerna-debug.log*
 
 node_modules
 cuatro-en-raya.zip
+cuatro-en-raya-windows.zip
+cuatro-en-raya-linux.zip
+.distribution/
 dist-ssr
 *.local
 

@@ -3,6 +3,7 @@ Dim shell, files, folder, result, nodePath, entry, candidate, paths, item, check
 Set shell = CreateObject("WScript.Shell")
 Set files = CreateObject("Scripting.FileSystemObject")
 folder = files.GetParentFolderName(WScript.ScriptFullName)
+If files.FolderExists(files.BuildPath(folder, "app")) Then folder = files.BuildPath(folder, "app")
 shell.CurrentDirectory = folder
 entry = files.BuildPath(folder, "scripts\launch.mjs")
 checkOnly = False
@@ -47,10 +48,10 @@ End If
 On Error Resume Next
 result = shell.Run(Chr(34) & nodePath & Chr(34) & " " & Chr(34) & entry & Chr(34) & extraArgs, 0, True)
 If Err.Number <> 0 Then
-  MsgBox "No se pudo iniciar: " & Err.Description & ". Usa run.cmd para ver el error.", 48, "4 en raya"
+  MsgBox "No se pudo iniciar: " & Err.Description & ". Usa " & files.BuildPath(folder, "run.cmd") & " para ver el error.", 48, "4 en raya"
   WScript.Quit 1
 ElseIf result <> 0 Then
-  MsgBox "No se pudo iniciar. Usa run.cmd para ver el error o consulta servidor.log.", 48, "4 en raya"
+  MsgBox "No se pudo iniciar. Usa " & files.BuildPath(folder, "run.cmd") & " para ver el error o consulta servidor.log en esa carpeta.", 48, "4 en raya"
   WScript.Quit result
 End If
 gamePort = shell.Environment("PROCESS")("RAYA_PORT")
@@ -65,5 +66,5 @@ shell.Run gameUrl, 1, False
 If Err.Number <> 0 Then
   MsgBox "El servidor esta iniciado, pero Windows no pudo abrir el navegador: " & Err.Description & vbCrLf & "Abre manualmente " & gameUrl, 48, "4 en raya"
 Else
-  MsgBox "Juego iniciado en segundo plano." & vbCrLf & "Si el navegador no aparece, abre " & gameUrl & vbCrLf & "Para terminar, usa Apagar juego o detener.cmd.", 64, "4 en raya"
+  MsgBox "Juego iniciado en segundo plano." & vbCrLf & "Si el navegador no aparece, abre " & gameUrl & vbCrLf & "Para terminar, usa Apagar juego o " & files.BuildPath(folder, "detener.cmd") & ".", 64, "4 en raya"
 End If
