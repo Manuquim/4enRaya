@@ -2,7 +2,15 @@
 
 Juego local para dos personas con React y Vite. Original: https://github.com/manuquim/4enRaya
 
-## Ejecutar
+## Jugar sin instalar paquetes
+
+El repositorio incluye **dist**, con el frontend precompilado. Para jugar en Windows, ejecuta **iniciar.cmd** y abre **http://127.0.0.1:8080/**. Necesitas Node.js 18 o posterior, pero no necesitas `npm install`, Vite ni la carpeta node_modules. El servidor utiliza solo funciones incluidas en Node.js y escucha únicamente en el propio PC. Para transmitir a la TV, usa la opción TV del juego.
+
+También puedes alojar el contenido de dist en cualquier servidor web estático. En ese caso, los jugadores solo necesitan un navegador; no requieren Node.js ni paquetes.
+
+El archivo de distribución cuatro-en-raya.zip contiene dist, el servidor local y el lanzador. Abre el juego mediante el servidor: abrir index.html directamente como archivo puede bloquear los módulos JavaScript.
+
+## Desarrollar
 
 Requiere Node.js 18 o posterior. En Windows usa npm.cmd si PowerShell bloquea npm.
 
@@ -56,6 +64,6 @@ npm run lint
 npm run build
 ```
 
-La carpeta dist contiene la web estática. La base relativa permite servirla bajo /4enRaya/. Los cambios locales y la subida del código a GitHub no sustituyen por sí solos un proceso de despliegue de dist. Sin una TV real conectada no se puede validar la transmisión física.
+La carpeta dist contiene la web estática y se incluye en Git. La base relativa permite servirla bajo /4enRaya/. Después de modificar el código, ejecuta `npm run build` y sube también los cambios de dist para actualizar la versión precompilada. La subida a GitHub no sustituye por sí sola el despliegue del contenido de dist. Sin una TV real conectada no se puede validar la transmisión física.
 
 El panel TV es una ventana modal: se cierra al pulsar fuera de él, con Escape o con su botón de cierre. Mientras está abierto bloquea el tablero, de modo que el clic exterior no coloca fichas. El foco de teclado permanece dentro del panel.
