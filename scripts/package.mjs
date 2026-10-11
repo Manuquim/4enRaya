@@ -26,8 +26,11 @@ for (const platform of ['windows', 'linux']) {
   }
   const archive = join(root, `cuatro-en-raya-${platform}.zip`);
   if (process.platform === 'win32') {
-    const command = `Compress-Archive -LiteralPath @(${quotePs(app)},${quotePs(join(directory, visibleLauncher))}) -DestinationPath ${quotePs(archive)} -Force`;
+    const temporary = join(stage, `${platform}.zip`);
+    // Forward slashes in ZIP entries also work with Linux archive extractors.
+    const command = `Add-Type -AssemblyName System.IO.Compression.FileSystem; $base=${quotePs(directory)}; $zip=[System.IO.Compression.ZipFile]::Open(${quotePs(temporary)},'Create'); try { Get-ChildItem -LiteralPath $base -Recurse -File | ForEach-Object { $name=$_.FullName.Substring($base.Length + 1).Replace('\\','/'); [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zip,$_.FullName,$name) | Out-Null } } finally { $zip.Dispose() }`;
     await execute('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', command], { windowsHide: true });
+    await cp(temporary, archive);
   } else {
     // A fresh ZIP avoids retaining files from a previous layout.
     const temporary = join(directory, 'package.zip');
