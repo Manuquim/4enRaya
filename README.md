@@ -4,11 +4,52 @@ Juego local para dos personas con React y Vite. Original: https://github.com/man
 
 ## Jugar sin instalar paquetes
 
-El repositorio incluye **dist**, con el frontend precompilado. Para jugar en Windows, ejecuta **iniciar.cmd** y abre **http://127.0.0.1:8080/**. Necesitas Node.js 18 o posterior, pero no necesitas `npm install`, Vite ni la carpeta node_modules. El servidor utiliza solo funciones incluidas en Node.js y escucha únicamente en el propio PC. Para transmitir a la TV, usa la opción TV del juego.
+El repositorio incluye **dist**, con el frontend precompilado. Funciona en Windows y Linux con **Node.js 18 o posterior**. No necesitas `npm install`, Vite ni la carpeta node_modules. El servidor utiliza solo funciones incluidas en Node.js y escucha únicamente en el propio PC. Para transmitir a la TV, usa la opción TV del juego.
+
+### Descargar el juego
+
+1. Abre [el repositorio en GitHub](https://github.com/Manuquim/4enRaya).
+2. Selecciona la rama **gh-pages** si no está ya seleccionada.
+3. Pulsa el botón verde **Code → Download ZIP**.
+4. Extrae el ZIP antes de ejecutar el juego. Dentro encontrarás dist, scripts y los lanzadores.
+
+El ZIP del repositorio incluye todo lo necesario para jugar, excepto Node.js. Si ya lo tienes instalado, no tienes que instalar nada más. Comprueba la versión con `node --version` en una terminal; debe ser 18 o posterior.
+
+### Windows
+
+1. Haz clic derecho sobre el ZIP y selecciona **Extraer todo**.
+2. Abre la carpeta extraída donde aparece **iniciar.cmd**.
+3. Haz doble clic en **iniciar.cmd**. Si Node.js no está instalado o no se reconoce, instálalo antes de continuar y vuelve a abrir el lanzador.
+4. Deja abierta la ventana del servidor y abre **http://127.0.0.1:8080/** en el navegador.
+5. Para detener el juego, pulsa **Ctrl+C** en la ventana del servidor o ciérrala.
+
+### Linux
+
+Sí: se usa exactamente el mismo frontend precompilado y servidor, con un lanzador de terminal en lugar del archivo cmd.
+
+1. Extrae el ZIP con el gestor de archivos.
+2. Abre una terminal dentro de la carpeta extraída donde aparece **iniciar.sh**.
+3. Ejecuta:
+
+```sh
+sh iniciar.sh
+```
+
+4. Deja abierta la terminal y abre **http://127.0.0.1:8080/** en el navegador.
+5. Para detener el servidor, pulsa **Ctrl+C**.
+
+No necesitas dar permisos de ejecución si lo lanzas con `sh iniciar.sh`. También puedes ejecutar `node scripts/serve-dist.mjs` desde la carpeta del proyecto, tanto en Linux como en Windows.
+
+### Si no se abre
+
+- **Node.js no se reconoce:** comprueba su instalación con `node --version` y vuelve a abrir la terminal.
+- **El puerto 8080 está ocupado:** cierra el otro servidor del juego o la aplicación que lo está usando y vuelve a iniciar.
+- **La página deja de funcionar:** comprueba que la ventana del servidor sigue abierta.
+- **Faltan archivos:** extrae el ZIP completo; conserva dist y scripts junto a los lanzadores.
 
 También puedes alojar el contenido de dist en cualquier servidor web estático. En ese caso, los jugadores solo necesitan un navegador; no requieren Node.js ni paquetes.
 
-El archivo de distribución cuatro-en-raya.zip contiene dist, el servidor local y el lanzador. Abre el juego mediante el servidor: abrir index.html directamente como archivo puede bloquear los módulos JavaScript.
+El archivo compacto de distribución cuatro-en-raya.zip, si se facilita por separado, contiene dist, scripts y los lanzadores de Windows y Linux. **Download ZIP** de GitHub descarga el repositorio completo. Abre el juego mediante el servidor: abrir index.html directamente como archivo puede bloquear los módulos JavaScript.
 
 ## Desarrollar
 
