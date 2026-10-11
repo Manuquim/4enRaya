@@ -17,6 +17,8 @@ export default function App() {
   const [connectionOpen, setConnectionOpen] = useState(false);
   const [connected, setConnected] = useState(false);
   const [connectionMethod, setConnectionMethod] = useState('cast');
+  const [shuttingDown, setShuttingDown] = useState(false);
+  const [poweredOff, setPoweredOff] = useState(false);
   const disconnectDialog = useRef(null);
   const columns = useRef([]);
   const lock = useRef(false);
@@ -64,10 +66,29 @@ export default function App() {
     setTv(false);
     setNotice('');
   }
+  async function shutdown() {
+    if (shuttingDown) return;
+    setShuttingDown(true);
+    try {
+      const health = await fetch('/__4enraya/health', { signal: AbortSignal.timeout(2000), cache: 'no-store' });
+      if (!health.ok) throw new Error();
+      const info = await health.json();
+      if (info.name !== '4enraya' || !info.token) throw new Error();
+      const stopped = await fetch('/__4enraya/stop', { method: 'POST', headers: { Authorization: `Bearer ${info.token}` }, signal: AbortSignal.timeout(3000) });
+      if (!stopped.ok) throw new Error();
+      await stopped.text();
+      if (document.fullscreenElement) await document.exitFullscreen().catch(() => {});
+      setPoweredOff(true);
+    } catch {
+      setNotice('No se pudo apagar el servidor. Esta opción requiere abrir el juego con el lanzador local actualizado; también puedes usar Detener.');
+    } finally { setShuttingDown(false); }
+  }
   const status = game.result === 'draw' ? '¡Empate!' : game.result ? `¡${names[game.result]} gana!` : `Turno de ${names[game.turn]}`;
   const isTv = tv || connected;
   const turnDisplay = <div className="game-status" role="status"><span className={`token status-dot ${game.turn}`}/><strong>{status}</strong><span className="move-count">{game.moves} / 42</span></div>;
   const newRoundButton = <button className="primary" onClick={reset}>{game.result ? 'Jugar otra vez ↗' : 'Nueva partida ↗'}</button>;
+  const shutdownButton = <button className="quiet shutdown-button" disabled={shuttingDown} onClick={shutdown}>{shuttingDown ? 'Apagando…' : '⏻ Apagar juego'}</button>;
+  if (poweredOff) return <main className="powered-off" role="status"><h1>Juego apagado</h1><p>El servidor del juego se ha detenido y su puerto queda libre.</p><p>Puedes cerrar esta pestaña. Para volver a jugar, abre el lanzador Run.</p>{connected && <p>Si estabas transmitiendo a la TV, detén también la transmisión en Chrome o Windows.</p>}</main>;
   return <main className={`app ${tv || connected ? 'tv-mode' : ''}`}>
     {!(tv || connected) && <header className="topbar"><a className="brand" href="./"><span className="brand-mark">4</span> en raya<span className="accent">.</span></a><div className="header-actions"><button className="quiet" onClick={() => setMenu(!menu)} aria-expanded={menu} aria-controls="game-menu">☰ Menú</button></div></header>}
     {menu && !(tv || connected) && <nav id="game-menu" className="game-menu" aria-label="Opciones del juego">
@@ -81,7 +102,7 @@ export default function App() {
       <h2>Marcador</h2>
       {['x','o'].map(player => <div key={player} className={`player-card ${!game.result && game.turn === player ? 'active' : ''}`}><span className={`token ${player}`}/><div><strong>{names[player]}</strong><small>{!game.result && game.turn === player ? 'Tu turno' : `Jugador ${player === 'x' ? 1 : 2}`}</small></div><b>{scores[player]}</b></div>)}
       <div className="draw-score">Empates <strong>{scores.draw}</strong></div><button className="text-button" onClick={() => { setScores({x:0,o:0,draw:0}); reset(); }}>Reiniciar marcador y partida</button>
-      {!isTv && <><div className="sidebar-new-round">{newRoundButton}</div><p className="notice" role="status">{notice}</p></>}
+      {!isTv && <><div className="sidebar-new-round">{newRoundButton}{shutdownButton}</div><p className="notice" role="status">{notice}</p></>}
     </aside><section className="arena" aria-label="Cuatro en raya">
       {isTv && turnDisplay}
       <div className={`board-wrap turn-${game.turn}`}><div className="column-controls">{Array.from({length:7},(_,col) => <button key={col} ref={el => { columns.current[col] = el; }} className={selected === col ? 'selected' : ''} aria-label={`Soltar ficha en columna ${col+1}`} disabled={Boolean(game.result) || game.board[0][col] !== 'W'} onFocus={() => setSelected(col)} onMouseEnter={() => setSelected(col)} onClick={() => drop(col)} onKeyDown={event => {
@@ -89,7 +110,7 @@ export default function App() {
       }}>↓</button>)}</div><div className="grid" aria-label="Tablero de seis filas y siete columnas">{game.board.flatMap((row,r) => row.map((cell,c) => <div key={`${r}-${c}`} className={`cell ${cell} ${game.line.some(([lr,lc]) => lr===r && lc===c) ? 'winning' : ''} ${game.last?.[0]===r && game.last?.[1]===c ? 'last' : ''}`}><span className="disc" role="img" aria-label={`Fila ${r+1}, columna ${c+1}: ${cell==='W' ? 'vacía' : names[cell]}`}/><button className="cell-hit" tabIndex={-1} aria-hidden="true" disabled={Boolean(game.result) || game.board[0][c] !== 'W'} onMouseEnter={() => setSelected(c)} onClick={() => drop(c)}/></div>))}</div></div>
       {isTv && <><div className="board-footer">{newRoundButton}</div><p className="notice" role="status">{notice}</p></>}
     </section></div>
-    {(tv || connected) && <div className="tv-bottom"><button className="quiet" onClick={() => connected ? disconnectDialog.current.showModal() : toggleTv()}>{connected ? 'Desconectar PC de la TV' : 'Salir de Vista TV'}</button></div>}
+    {(tv || connected) && <div className="tv-bottom"><button className="quiet" onClick={() => connected ? disconnectDialog.current.showModal() : toggleTv()}>{connected ? 'Desconectar PC de la TV' : 'Salir de Vista TV'}</button>{shutdownButton}</div>}
     <dialog ref={disconnectDialog} className="disconnect-dialog" aria-labelledby="disconnect-title">
       <h2 id="disconnect-title">Desconectar de la TV</h2>
       {connectionMethod === 'cast' && <p>En Chrome, abre <strong>Transmitir</strong> y pulsa <strong>Detener transmisión</strong>. Después confirma aquí para volver a la vista normal.</p>}

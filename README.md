@@ -37,6 +37,10 @@ El ZIP del repositorio incluye todo lo necesario para jugar, excepto Node.js. Si
 4. Si Windows no admite scripts VBS, usa **run.cmd** o **iniciar.cmd**: abren una consola breve que se cierra al iniciar; en caso de error permanece abierta para mostrarlo.
 5. Para detener el servidor, ejecuta **detener.cmd**. Cerrar la pestaña del navegador no detiene el servidor.
 
+También puedes pulsar **Apagar juego** dentro del juego: aparece debajo de Nueva partida en PC y junto a la desconexión en la vista TV. Detiene el proceso del servidor local, cierra sus conexiones y libera su puerto (8080 por defecto). Después aparece una pantalla de juego apagado; para volver, ejecuta el lanzador. Solo afecta al servidor del juego. La transmisión de Chrome/Windows y la pestaña del navegador deben cerrarse aparte.
+
+El botón requiere el lanzador local actualizado: en GitHub Pages o en otro alojamiento estático no hay un proceso local que la web pueda apagar. Si no se puede detener el servidor se muestra un aviso, sin simular un apagado.
+
 ### Linux
 
 Se usa el mismo frontend y servidor. El lanzador inicia el proceso en segundo plano y abre el navegador con xdg-open, sin dejar una terminal abierta.

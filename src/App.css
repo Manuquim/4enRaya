@@ -167,3 +167,5 @@ dialog.how-to-play .help{margin:0;border-radius:0}
   .app:not(.tv-mode) .scorecard{align-self:stretch;display:flex;flex-direction:column}
   .app:not(.tv-mode) .sidebar-new-round{margin-top:auto;padding-top:16px}
 }
+
+.shutdown-button{border-color:#fa786966;color:#ffb6ad}.app:not(.tv-mode) .sidebar-new-round .shutdown-button{width:100%;margin-top:10px;padding:10px;font-size:12px}.tv-mode .tv-bottom{gap:16px;flex-wrap:wrap}.powered-off{min-height:100dvh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:24px}.powered-off h1{font-size:36px;letter-spacing:-1px}.powered-off p{max-width:560px;color:#aab3c2;margin:8px 0}

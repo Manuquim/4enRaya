@@ -11,14 +11,22 @@ const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; ch
 const server = createServer(async (request, response) => {
   if (request.url === '/__4enraya/health' && request.method === 'GET') {
     response.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
-    response.end(JSON.stringify({ name: '4enraya', token })); return;
+    response.end(JSON.stringify({ name: '4enraya', token, pid: process.pid })); return;
   }
   if (request.url === '/__4enraya/stop' && request.method === 'POST') {
     if (request.headers.authorization !== `Bearer ${token}`) {
       response.writeHead(403); response.end(); return;
     }
-    response.writeHead(200); response.end('Servidor detenido');
-    server.close(); server.closeIdleConnections(); return;
+    response.once('finish', () => {
+      const forceClose = setTimeout(() => server.closeAllConnections(), 100);
+      const forceExit = setTimeout(() => process.exit(0), 1000);
+      server.close(() => {
+        clearTimeout(forceClose); clearTimeout(forceExit);
+        process.exit(0);
+      });
+      server.closeIdleConnections();
+    });
+    response.writeHead(200, { Connection: 'close' }); response.end('Servidor detenido'); return;
   }
   if (!['GET', 'HEAD'].includes(request.method)) {
     response.writeHead(405, { Allow: 'GET, HEAD' }); response.end(); return;

@@ -27,6 +27,15 @@ test('background launcher serves the game, reuses the server, and stops it', { t
     assert.equal(second.token, first.token);
     await execute(['--stop']);
     await assert.rejects(fetch(url));
+    for (let attempt = 0; attempt < 30; attempt++) {
+      try { process.kill(first.pid, 0); }
+      catch { break; }
+      await new Promise(resolve => setTimeout(resolve, 20));
+    }
+    assert.throws(() => process.kill(first.pid, 0), { code: 'ESRCH' });
+    const released = createServer();
+    await new Promise((resolve, reject) => { released.once('error', reject); released.listen(port, '127.0.0.1', resolve); });
+    await new Promise(resolve => released.close(resolve));
     await execute(['--stop']);
   } finally { await execute(['--stop']); }
 });
