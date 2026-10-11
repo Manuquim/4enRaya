@@ -42,3 +42,55 @@
   .tv-mode .board-footer .primary{font-size:15px;padding:12px}
   .tv-mode .tv-bottom .quiet{font-size:12px;padding:8px 16px}
 }
+
+/* PC: size the complete game against the browser viewport, not only its width. */
+.app:not(.tv-mode){position:relative;max-width:1040px;min-height:100dvh;padding:16px 28px;display:flex;flex-direction:column;gap:14px}
+.app:not(.tv-mode) .topbar{min-height:36px;flex-shrink:0}
+.app:not(.tv-mode) .intro{margin:0;display:grid;grid-template-columns:auto 1fr;column-gap:22px;align-items:center}
+.app:not(.tv-mode) .intro .eyebrow{grid-column:1 / -1;font-size:9px}
+.app:not(.tv-mode) h1{font-size:36px;letter-spacing:-1.5px;margin:3px 0;line-height:1.15}
+.app:not(.tv-mode) .intro p{font-size:13px}
+.app:not(.tv-mode) .play-layout{width:100%;max-width:min(960px,calc(max(210px,100dvh - 320px)*7/6 + 224px));margin:auto;grid-template-columns:200px minmax(0,1fr);gap:24px}
+.app:not(.tv-mode) .scorecard{padding-top:8px}
+.app:not(.tv-mode) .scorecard h2{font-size:22px;margin:8px 0}
+.app:not(.tv-mode) .muted{font-size:12px;margin:8px 0 14px}
+.app:not(.tv-mode) .player-card{padding:10px;margin:8px 0}
+.app:not(.tv-mode) .player-card b{font-size:22px}
+.app:not(.tv-mode) .draw-score{padding:8px 10px}
+.app:not(.tv-mode) .text-button{padding:8px;font-size:10px}
+.app:not(.tv-mode) .game-status{padding-bottom:10px;font-size:14px}
+.app:not(.tv-mode) .board-wrap{padding:8px 12px 12px;border-radius:16px}
+.app:not(.tv-mode) .grid,.app:not(.tv-mode) .column-controls{gap:7px}
+.app:not(.tv-mode) .column-controls{margin-bottom:7px}
+.app:not(.tv-mode) .column-controls button{font-size:20px;min-height:28px;padding:0}
+.app:not(.tv-mode) .board-footer{margin-top:12px}
+.app:not(.tv-mode) .board-footer>span{font-size:11px}
+.app:not(.tv-mode) .primary{padding:10px 13px;font-size:12px}
+.app:not(.tv-mode) .notice:empty{display:none}
+.app:not(.tv-mode) .page-footer{margin:0;padding-top:10px;font-size:10px;flex-shrink:0}
+.app:not(.tv-mode) .game-menu{position:absolute;top:60px;right:28px;z-index:5;display:flex;flex-direction:column;padding:12px;margin:0;border:1px solid #40516b;border-radius:12px;background:#253040;box-shadow:0 12px 30px #0005}
+.app:not(.tv-mode)>.help,.app:not(.tv-mode) .tv-connection{position:fixed;top:64px;left:16px;right:16px;z-index:4;width:auto;max-width:780px;max-height:calc(100dvh - 84px);margin:0 auto;overflow:auto;border:1px solid #40516b;border-radius:12px;box-shadow:0 18px 50px #0008}
+.app:not(.tv-mode) .tv-connection .help{margin:0;border-radius:0}
+@media(max-width:760px){
+  .app:not(.tv-mode){padding:14px 16px;gap:12px}
+  .app:not(.tv-mode) .intro{display:block}
+  .app:not(.tv-mode) h1{font-size:30px}
+  .app:not(.tv-mode) .intro p{font-size:12px}
+  .app:not(.tv-mode) .play-layout{grid-template-columns:1fr;max-width:min(500px,calc(max(200px,100dvh - 380px)*7/6));gap:12px}
+  .app:not(.tv-mode) .scorecard{padding:0;gap:8px}
+  .app:not(.tv-mode) .player-card{margin:0;padding:8px}
+  .app:not(.tv-mode) .player-card .token{width:24px;height:24px}
+  .app:not(.tv-mode) .draw-score{padding:2px 8px;font-size:11px}
+  .app:not(.tv-mode) .text-button{padding:2px;font-size:9px}
+  .app:not(.tv-mode) .page-footer span:last-child{display:none}
+  .app:not(.tv-mode) .game-menu{right:16px}
+}
+@media(min-width:761px) and (max-height:580px){
+  .app:not(.tv-mode){padding:10px 22px;gap:8px}
+  .app:not(.tv-mode) .intro{display:none}
+  .app:not(.tv-mode) .play-layout{max-width:min(900px,calc(max(190px,100dvh - 190px)*7/6 + 224px))}
+  .app:not(.tv-mode) .scorecard>.eyebrow,.app:not(.tv-mode) .scorecard>h2,.app:not(.tv-mode) .scorecard>.muted{display:none}
+  .app:not(.tv-mode) .board-footer>span{display:none}
+  .app:not(.tv-mode) .board-footer{justify-content:flex-end}
+  .app:not(.tv-mode) .page-footer{display:none}
+}
