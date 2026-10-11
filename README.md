@@ -89,6 +89,7 @@ En **GitHub Pages**, un servidor estático o el modo de desarrollo con Vite, el 
 - **El navegador no se abre:** entra manualmente en http://127.0.0.1:8080/; en Linux comprueba que xdg-open esté disponible.
 - **Error al iniciar:** usa run.cmd en Windows o `node run` en una terminal para ver el mensaje. El servidor registra errores en servidor.log.
 - **run.vbs muestra «No se pudo iniciar»:** usa run.cmd. Descarga y extrae el ZIP actualizado completo, comprueba Node.js 18 o posterior y revisa si otro programa ocupa el puerto 8080. El archivo run sin extensión contiene JavaScript y se ejecuta con Node.js; no es un acceso de Windows para doble clic.
+- **run.vbs parece no hacer nada:** la versión actual muestra un mensaje de resultado después del arranque y abre la URL directamente con Windows. Si indica que el servidor está iniciado pero no ves el navegador, abre http://127.0.0.1:8080/ manualmente. Si no aparece ningún mensaje, usa run.cmd; Windows puede tener desactivada la ejecución de archivos VBS o una asociación de archivos diferente.
 - **Se muestra una versión antigua:** detén el servidor anterior antes de iniciar una descarga nueva.
 - **Faltan archivos:** extrae el ZIP completo; conserva run, dist y scripts junto a los lanzadores.
 

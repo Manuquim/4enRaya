@@ -1,15 +1,16 @@
 Option Explicit
-Dim shell, files, folder, result, nodePath, entry, candidate, paths, item, checkOnly, extraArgs
+Dim shell, files, folder, result, nodePath, entry, candidate, paths, item, checkOnly, extraArgs, skipBrowser, gamePort, gameUrl
 Set shell = CreateObject("WScript.Shell")
 Set files = CreateObject("Scripting.FileSystemObject")
 folder = files.GetParentFolderName(WScript.ScriptFullName)
 shell.CurrentDirectory = folder
 entry = files.BuildPath(folder, "scripts\launch.mjs")
 checkOnly = False
-extraArgs = ""
+extraArgs = " --no-browser"
+skipBrowser = False
 If WScript.Arguments.Count > 0 Then checkOnly = (WScript.Arguments(0) = "--check")
 If WScript.Arguments.Count > 0 Then
-  If WScript.Arguments(0) = "--no-browser" Then extraArgs = " --no-browser"
+  If WScript.Arguments(0) = "--no-browser" Then skipBrowser = True
 End If
 If Not files.FileExists(entry) Or Not files.FileExists(files.BuildPath(folder, "dist\index.html")) Then
   WScript.Echo "Faltan archivos. Extrae el ZIP completo antes de ejecutar el lanzador."
@@ -47,6 +48,22 @@ On Error Resume Next
 result = shell.Run(Chr(34) & nodePath & Chr(34) & " " & Chr(34) & entry & Chr(34) & extraArgs, 0, True)
 If Err.Number <> 0 Then
   MsgBox "No se pudo iniciar: " & Err.Description & ". Usa run.cmd para ver el error.", 48, "4 en raya"
+  WScript.Quit 1
 ElseIf result <> 0 Then
   MsgBox "No se pudo iniciar. Usa run.cmd para ver el error o consulta servidor.log.", 48, "4 en raya"
+  WScript.Quit result
+End If
+gamePort = shell.Environment("PROCESS")("RAYA_PORT")
+If gamePort = "" Then gamePort = "8080"
+gameUrl = "http://127.0.0.1:" & gamePort & "/"
+If skipBrowser Then
+  WScript.Echo "Servidor iniciado: " & gameUrl
+  WScript.Quit 0
+End If
+Err.Clear
+shell.Run gameUrl, 1, False
+If Err.Number <> 0 Then
+  MsgBox "El servidor esta iniciado, pero Windows no pudo abrir el navegador: " & Err.Description & vbCrLf & "Abre manualmente " & gameUrl, 48, "4 en raya"
+Else
+  MsgBox "Juego iniciado en segundo plano." & vbCrLf & "Si el navegador no aparece, abre " & gameUrl & vbCrLf & "Para terminar, usa Apagar juego o detener.cmd.", 64, "4 en raya"
 End If
