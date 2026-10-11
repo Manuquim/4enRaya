@@ -18,19 +18,20 @@ for (const platform of ['windows', 'linux']) {
   await mkdir(join(app, 'scripts'));
   for (const file of ['launch.mjs', 'serve-dist.mjs']) await cp(join(root, 'scripts', file), join(app, 'scripts', file));
   const launcher = platform === 'windows' ? 'run.vbs' : 'Run.desktop';
-  if (platform === 'windows') await cp(join(root, launcher), join(directory, launcher));
+  const visibleLauncher = platform === 'windows' ? 'JUGAR - Windows.vbs' : 'JUGAR - Linux.desktop';
+  if (platform === 'windows') await cp(join(root, launcher), join(directory, visibleLauncher));
   else {
     const desktop = (await readFile(join(root, launcher), 'utf8')).replace('/iniciar.sh', '/app/iniciar.sh');
-    await writeFile(join(directory, launcher), desktop);
+    await writeFile(join(directory, visibleLauncher), desktop);
   }
   const archive = join(root, `cuatro-en-raya-${platform}.zip`);
   if (process.platform === 'win32') {
-    const command = `Compress-Archive -LiteralPath @(${quotePs(app)},${quotePs(join(directory, launcher))}) -DestinationPath ${quotePs(archive)} -Force`;
+    const command = `Compress-Archive -LiteralPath @(${quotePs(app)},${quotePs(join(directory, visibleLauncher))}) -DestinationPath ${quotePs(archive)} -Force`;
     await execute('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', command], { windowsHide: true });
   } else {
     // A fresh ZIP avoids retaining files from a previous layout.
     const temporary = join(directory, 'package.zip');
-    await execute('zip', ['-qr', temporary, 'app', launcher], { cwd: directory });
+    await execute('zip', ['-qr', temporary, 'app', visibleLauncher], { cwd: directory });
     await cp(temporary, archive);
   }
 }

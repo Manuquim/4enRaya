@@ -1,4 +1,4 @@
-﻿# 4 en raya · Una más
+# 4 en raya · Una más
 
 Juego local para dos personas con React y Vite. Original: https://github.com/manuquim/4enRaya
 
@@ -8,22 +8,22 @@ El repositorio incluye **dist**, con el frontend precompilado. Funciona en Windo
 
 ### Inicio rápido
 
-Descarga el paquete precompilado desde [Releases de GitHub](https://github.com/Manuquim/4enRaya/releases): [Windows](https://github.com/Manuquim/4enRaya/releases/download/v1.0.0/cuatro-en-raya-windows.zip) o [Linux](https://github.com/Manuquim/4enRaya/releases/download/v1.0.0/cuatro-en-raya-linux.zip). Extrae el ZIP completo. Necesitas Node.js instalado previamente.
+Descarga el paquete precompilado desde [Releases de GitHub](https://github.com/Manuquim/4enRaya/releases): [Windows](https://github.com/Manuquim/4enRaya/releases/download/v1.0.1/cuatro-en-raya-windows.zip) o [Linux](https://github.com/Manuquim/4enRaya/releases/download/v1.0.1/cuatro-en-raya-linux.zip). Extrae el ZIP completo. Necesitas Node.js instalado previamente.
 
 La carpeta extraída solo muestra el lanzador y una carpeta app:
 
 ```text
 Windows:                  Linux:
-run.vbs                   Run.desktop
+JUGAR - Windows.vbs        JUGAR - Linux.desktop
 app/                      app/
 ```
 
-En Windows, haz doble clic en **run.vbs**. En Linux, abre **Run.desktop** si tu entorno lo permite. Todos los archivos auxiliares, el README y los lanzadores alternativos quedan dentro de **app**. No muevas el lanzador fuera de su carpeta ni borres app.
+En Windows, haz doble clic en **JUGAR - Windows.vbs**. En Linux, abre **JUGAR - Linux.desktop** si tu entorno lo permite. Si el sistema oculta las extensiones, los verás como **JUGAR - Windows** o **JUGAR - Linux - 4 en raya**. El archivo que empieza por JUGAR es el lanzador; app es la carpeta de datos. No muevas el lanzador fuera de su carpeta ni borres app.
 
 | Sistema | Iniciar | Apagar |
 | --- | --- | --- |
-| Windows | Doble clic en **run.vbs**; alternativa: **app/run.cmd** | Botón **Apagar juego** o **app/detener.cmd** |
-| Linux | **Run.desktop** si tu escritorio lo admite; alternativa: `sh app/iniciar.sh` | Botón **Apagar juego**, **app/Detener.desktop** o `sh app/detener.sh` |
+| Windows | Doble clic en **JUGAR - Windows.vbs**; alternativa: **app/run.cmd** | Botón **Apagar juego** o **app/detener.cmd** |
+| Linux | **JUGAR - Linux.desktop** si tu escritorio lo admite; alternativa: `sh app/iniciar.sh` | Botón **Apagar juego**, **app/Detener.desktop** o `sh app/detener.sh` |
 | Ambos, desde terminal | `node app/run` | `node app/run --stop` |
 
 El navegador se abre automáticamente y el servidor queda en segundo plano. No tienes que mantener una terminal abierta.
