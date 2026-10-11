@@ -50,3 +50,5 @@ La conexión se abre desde **Menú → Conectar / probar TV**. Al confirmar el c
 La vista TV aprovecha las pantallas panorámicas: tablero grande a la izquierda y turno, jugadas y nueva partida a la derecha. Las fichas conservan su forma circular. La desconexión queda centrada debajo. En ventanas verticales el diseño vuelve a una columna y en pantallas horizontales de poca altura reduce los márgenes.
 
 En PC el diseño es compacto y el tamaño del tablero depende de la altura útil del navegador. El menú, la ayuda y la configuración de TV se abren como paneles superpuestos con desplazamiento interno, para no empujar el juego fuera de la ventana. En ventanas de poca altura se ocultan los textos decorativos; en móvil se conserva una columna.
+
+El tablero del PC queda a la izquierda y dispone de casi toda la altura útil. Turno, jugadas, marcador y botones comparten un panel lateral derecho. Se retiran el título decorativo y el pie de página para ganar superficie de juego. En móvil el panel se convierte en una franja compacta sobre el tablero.
