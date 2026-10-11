@@ -14,11 +14,11 @@ El mismo ZIP sirve para ambos sistemas. Una vez extraído, abre una terminal en 
 node run
 ```
 
-Abre **http://127.0.0.1:8080/** en el navegador y deja abierta la terminal. Pulsa **Ctrl+C** para detener el servidor.
+El lanzador inicia el servidor en segundo plano y abre **http://127.0.0.1:8080/** en el navegador automáticamente. Puedes cerrar la terminal. Si el juego ya está iniciado, reutiliza el servidor. Para detenerlo ejecuta `node run --stop`.
 
 No tienes que elegir la descarga según el sistema: Node.js ejecuta el mismo archivo y adapta las rutas de archivos al sistema operativo. No requiere detectar Windows o Linux ni instalar paquetes. Los lanzadores **iniciar.cmd** y **iniciar.sh** llaman internamente a este mismo archivo run.
 
-Para iniciar con doble clic en Windows usa **iniciar.cmd**; en Linux usa **sh iniciar.sh**. El archivo run se ejecuta con Node.js, no mediante una asociación de doble clic común a los dos sistemas.
+Para iniciar con doble clic en Windows usa **run.vbs** (sin consola) o **run.cmd** (la consola se cierra tras arrancar). En Linux se incluye **Run.desktop**, para los entornos que permiten ejecutar accesos de escritorio; también puedes usar **sh iniciar.sh**. Todos llaman al mismo archivo run.
 
 ### Descargar el juego
 
@@ -32,25 +32,25 @@ El ZIP del repositorio incluye todo lo necesario para jugar, excepto Node.js. Si
 ### Windows
 
 1. Haz clic derecho sobre el ZIP y selecciona **Extraer todo**.
-2. Abre la carpeta extraída donde aparece **iniciar.cmd**.
-3. Haz doble clic en **iniciar.cmd**. Si Node.js no está instalado o no se reconoce, instálalo antes de continuar y vuelve a abrir el lanzador.
-4. Deja abierta la ventana del servidor y abre **http://127.0.0.1:8080/** en el navegador.
-5. Para detener el juego, pulsa **Ctrl+C** en la ventana del servidor o ciérrala.
+2. Abre la carpeta extraída donde aparece **run.vbs**.
+3. Haz doble clic en **run.vbs**. Arranca el servidor oculto y abre el navegador, sin escribir comandos ni mantener PowerShell abierto. Necesitas Node.js instalado previamente.
+4. Si Windows no admite scripts VBS, usa **run.cmd** o **iniciar.cmd**: abren una consola breve que se cierra al iniciar; en caso de error permanece abierta para mostrarlo.
+5. Para detener el servidor, ejecuta **detener.cmd**. Cerrar la pestaña del navegador no detiene el servidor.
 
 ### Linux
 
-Sí: se usa exactamente el mismo frontend precompilado y servidor, con un lanzador de terminal en lugar del archivo cmd.
+Se usa el mismo frontend y servidor. El lanzador inicia el proceso en segundo plano y abre el navegador con xdg-open, sin dejar una terminal abierta.
 
 1. Extrae el ZIP con el gestor de archivos.
-2. Abre una terminal dentro de la carpeta extraída donde aparece **iniciar.sh**.
-3. Ejecuta:
+2. Si tu entorno de escritorio permite ejecutar archivos desktop, abre **Run.desktop**. Puede solicitar permiso de ejecución o marcarlo como confiable la primera vez. Conserva el acceso en la carpeta extraída, junto a iniciar.sh.
+3. Si el escritorio no permite lanzar ese acceso, abre una terminal en la carpeta extraída y ejecuta:
 
 ```sh
 sh iniciar.sh
 ```
 
-4. Deja abierta la terminal y abre **http://127.0.0.1:8080/** en el navegador.
-5. Para detener el servidor, pulsa **Ctrl+C**.
+4. El navegador se abre automáticamente. Puedes cerrar la terminal.
+5. Para detener el servidor, abre **Detener.desktop** si tu escritorio lo admite, o ejecuta `sh detener.sh` o `node run --stop`.
 
 No necesitas dar permisos de ejecución si lo lanzas con `sh iniciar.sh`. También puedes ejecutar `node run` desde la carpeta del proyecto, tanto en Linux como en Windows.
 
@@ -58,12 +58,16 @@ No necesitas dar permisos de ejecución si lo lanzas con `sh iniciar.sh`. Tambi�
 
 - **Node.js no se reconoce:** comprueba su instalación con `node --version` y vuelve a abrir la terminal.
 - **El puerto 8080 está ocupado:** cierra el otro servidor del juego o la aplicación que lo está usando y vuelve a iniciar.
-- **La página deja de funcionar:** comprueba que la ventana del servidor sigue abierta.
+- **El navegador no se abre:** entra manualmente en http://127.0.0.1:8080/; en Linux comprueba que xdg-open esté disponible.
+- **Error al iniciar:** usa run.cmd en Windows o `node run` en una terminal para ver el mensaje. El servidor registra errores en servidor.log.
+- **Se muestra una versión antigua:** detén el servidor anterior antes de iniciar una descarga nueva.
 - **Faltan archivos:** extrae el ZIP completo; conserva run, dist y scripts junto a los lanzadores.
 
 También puedes alojar el contenido de dist en cualquier servidor web estático. En ese caso, los jugadores solo necesitan un navegador; no requieren Node.js ni paquetes.
 
 El archivo compacto de distribución cuatro-en-raya.zip, si se facilita por separado, contiene run, dist, scripts y los lanzadores de Windows y Linux. **Download ZIP** de GitHub descarga el repositorio completo. Abre el juego mediante el servidor: abrir index.html directamente como archivo puede bloquear los módulos JavaScript.
+
+El arranque no instala servicios, tareas programadas ni modifica la política de PowerShell. El servidor dura hasta que lo detienes o reinicias el equipo. Para ejecutarlo en primer plano y cerrarlo con Ctrl+C, usa `node scripts/serve-dist.mjs`.
 
 ## Desarrollar
 

@@ -1,2 +1,5 @@
 #!/usr/bin/env node
-import('./scripts/serve-dist.mjs');
+import('./scripts/launch.mjs').catch(error => {
+  console.error(error.message);
+  process.exitCode = 1;
+});

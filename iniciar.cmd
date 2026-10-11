@@ -1,4 +1,4 @@
 @echo off
 cd /d "%~dp0"
 node run
-pause
+if errorlevel 1 pause

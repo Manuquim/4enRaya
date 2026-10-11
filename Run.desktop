@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=4 en raya - Jugar
+Comment=Inicia el juego en segundo plano y abre el navegador
+Exec=sh -c "exec sh \\"\\$(dirname \\"\\$1\\")/iniciar.sh\\"" sh %k
+Terminal=false
+Icon=applications-games
+Categories=Game;

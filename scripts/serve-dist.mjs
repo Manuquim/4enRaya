@@ -2,10 +2,24 @@ import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { resolve, sep, extname } from 'node:path';
+import { randomUUID } from 'node:crypto';
 
 const root = fileURLToPath(new URL('../dist/', import.meta.url));
+const token = randomUUID();
+const port = Number(process.env.RAYA_PORT || 8080);
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml' };
 const server = createServer(async (request, response) => {
+  if (request.url === '/__4enraya/health' && request.method === 'GET') {
+    response.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
+    response.end(JSON.stringify({ name: '4enraya', token })); return;
+  }
+  if (request.url === '/__4enraya/stop' && request.method === 'POST') {
+    if (request.headers.authorization !== `Bearer ${token}`) {
+      response.writeHead(403); response.end(); return;
+    }
+    response.writeHead(200); response.end('Servidor detenido');
+    server.close(); server.closeIdleConnections(); return;
+  }
   if (!['GET', 'HEAD'].includes(request.method)) {
     response.writeHead(405, { Allow: 'GET, HEAD' }); response.end(); return;
   }
@@ -24,10 +38,9 @@ const server = createServer(async (request, response) => {
   }
 });
 server.on('error', error => {
-  console.error(error.code === 'EADDRINUSE' ? 'El puerto 8080 está ocupado. Cierra el otro servidor y vuelve a iniciar.' : 'No se pudo iniciar el servidor: ' + error.message);
+  console.error(error.code === 'EADDRINUSE' ? `El puerto ${port} está ocupado. Cierra el otro servidor y vuelve a iniciar.` : 'No se pudo iniciar el servidor: ' + error.message);
   process.exitCode = 1;
 });
-server.listen(8080, '127.0.0.1', () => {
-  console.log('Juego listo: http://127.0.0.1:8080/');
-  console.log('No necesitas instalar paquetes. Pulsa Ctrl+C para cerrar.');
+server.listen(port, '127.0.0.1', () => {
+  console.log(`Juego listo: http://127.0.0.1:${port}/`);
 });
