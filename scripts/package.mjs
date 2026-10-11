@@ -17,8 +17,8 @@ for (const platform of ['windows', 'linux']) {
   for (const file of runtimeFiles) await cp(join(root, file), join(app, file), { recursive: true });
   await mkdir(join(app, 'scripts'));
   for (const file of ['launch.mjs', 'serve-dist.mjs']) await cp(join(root, 'scripts', file), join(app, 'scripts', file));
-  const launcher = platform === 'windows' ? 'run.vbs' : 'Run.desktop';
-  const visibleLauncher = platform === 'windows' ? 'JUGAR - Windows.vbs' : 'JUGAR - Linux.desktop';
+  const launcher = platform === 'windows' ? 'JUGAR - Windows.vbs' : 'JUGAR - Linux.desktop';
+  const visibleLauncher = launcher;
   if (platform === 'windows') await cp(join(root, launcher), join(directory, visibleLauncher));
   else {
     const desktop = (await readFile(join(root, launcher), 'utf8')).replace('/iniciar.sh', '/app/iniciar.sh');

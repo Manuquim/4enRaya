@@ -40,7 +40,7 @@ El lanzador inicia el servidor en segundo plano y abre **http://127.0.0.1:8080/*
 
 No tienes que elegir la descarga según el sistema: Node.js ejecuta el mismo archivo y adapta las rutas de archivos al sistema operativo. No requiere detectar Windows o Linux ni instalar paquetes. Los lanzadores **iniciar.cmd** y **iniciar.sh** llaman internamente a este mismo archivo run.
 
-Para iniciar con doble clic en Windows usa **run.vbs** (sin consola) o **run.cmd** (la consola se cierra tras arrancar). En Linux se incluye **Run.desktop**, para los entornos que permiten ejecutar accesos de escritorio; también puedes usar **sh iniciar.sh**. Todos llaman al mismo archivo run.
+Para iniciar con doble clic en Windows usa **JUGAR - Windows.vbs** (sin consola) o **run.cmd** (la consola se cierra tras arrancar). En Linux se incluye **JUGAR - Linux.desktop**, para los entornos que permiten ejecutar accesos de escritorio; también puedes usar **sh iniciar.sh**. Todos llaman al mismo archivo run.
 
 ### Descargar el juego
 
@@ -58,9 +58,9 @@ Las instrucciones siguientes que usan run.cmd, iniciar.sh o detener.cmd directam
 ### Windows
 
 1. Haz clic derecho sobre el ZIP y selecciona **Extraer todo**.
-2. Abre la carpeta extraída donde aparece **run.vbs**.
+2. Abre la carpeta extraída donde aparece **JUGAR - Windows.vbs**.
 3. Haz doble clic en **run.cmd**. Arranca el servidor en segundo plano y abre el navegador. La consola se cierra tras arrancar; no tienes que mantener PowerShell abierto. Necesitas Node.js instalado previamente.
-4. **run.vbs** es una alternativa sin consola si Windows permite ejecutar VBScript. Ambos buscan Node.js en PATH y en sus ubicaciones habituales. Si el VBS muestra un error, abre **run.cmd** para ver la causa concreta. **iniciar.cmd** también usa el mismo lanzador.
+4. **JUGAR - Windows.vbs** es una alternativa sin consola si Windows permite ejecutar VBScript. Ambos buscan Node.js en PATH y en sus ubicaciones habituales. Si el VBS muestra un error, abre **run.cmd** para ver la causa concreta. **iniciar.cmd** también usa el mismo lanzador.
 5. Para finalizar, pulsa **Apagar juego** en la página o ejecuta **detener.cmd**.
 
 ### Linux
@@ -68,7 +68,7 @@ Las instrucciones siguientes que usan run.cmd, iniciar.sh o detener.cmd directam
 Se usa el mismo frontend y servidor. El lanzador inicia el proceso en segundo plano y abre el navegador con xdg-open, sin dejar una terminal abierta.
 
 1. Extrae el ZIP con el gestor de archivos.
-2. Si tu entorno de escritorio permite ejecutar archivos desktop, abre **Run.desktop**. Puede solicitar permiso de ejecución o marcarlo como confiable la primera vez. Conserva el acceso en la carpeta extraída, junto a iniciar.sh.
+2. Si tu entorno de escritorio permite ejecutar archivos desktop, abre **JUGAR - Linux.desktop**. Puede solicitar permiso de ejecución o marcarlo como confiable la primera vez. Conserva el acceso en la carpeta extraída, junto a iniciar.sh.
 3. Si el escritorio no permite lanzar ese acceso, abre una terminal en la carpeta extraída y ejecuta:
 
 ```sh
@@ -102,8 +102,8 @@ En **GitHub Pages**, un servidor estático o el modo de desarrollo con Vite, el 
 - **El puerto 8080 está ocupado:** cierra el otro servidor del juego o la aplicación que lo está usando y vuelve a iniciar.
 - **El navegador no se abre:** entra manualmente en http://127.0.0.1:8080/; en Linux comprueba que xdg-open esté disponible.
 - **Error al iniciar:** usa run.cmd en Windows o `node run` en una terminal para ver el mensaje. El servidor registra errores en servidor.log.
-- **run.vbs muestra «No se pudo iniciar»:** usa run.cmd. Descarga y extrae el ZIP actualizado completo, comprueba Node.js 18 o posterior y revisa si otro programa ocupa el puerto 8080. El archivo run sin extensión contiene JavaScript y se ejecuta con Node.js; no es un acceso de Windows para doble clic.
-- **run.vbs parece no hacer nada:** la versión actual muestra un mensaje de resultado después del arranque y abre la URL directamente con Windows. Si indica que el servidor está iniciado pero no ves el navegador, abre http://127.0.0.1:8080/ manualmente. Si no aparece ningún mensaje, usa run.cmd; Windows puede tener desactivada la ejecución de archivos VBS o una asociación de archivos diferente.
+- **JUGAR - Windows.vbs muestra «No se pudo iniciar»:** usa run.cmd. Descarga y extrae el ZIP actualizado completo, comprueba Node.js 18 o posterior y revisa si otro programa ocupa el puerto 8080. El archivo run sin extensión contiene JavaScript y se ejecuta con Node.js; no es un acceso de Windows para doble clic.
+- **JUGAR - Windows.vbs parece no hacer nada:** la versión actual muestra un mensaje de resultado después del arranque y abre la URL directamente con Windows. Si indica que el servidor está iniciado pero no ves el navegador, abre http://127.0.0.1:8080/ manualmente. Si no aparece ningún mensaje, usa run.cmd; Windows puede tener desactivada la ejecución de archivos VBS o una asociación de archivos diferente.
 - **Se muestra una versión antigua:** detén el servidor anterior antes de iniciar una descarga nueva.
 - **Faltan archivos:** extrae el ZIP completo; conserva run, dist y scripts junto a los lanzadores.
 
