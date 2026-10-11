@@ -131,3 +131,24 @@
   .app:not(.tv-mode) .scorecard h2{margin:12px 0 8px}
   .app:not(.tv-mode) .sidebar-new-round{margin-top:8px}
 }
+
+/* Desktop: left controls take 20%, with the remaining 80% reserved for play. */
+@media(min-width:761px){
+  .app:not(.tv-mode){max-width:none;padding:12px 20px;gap:10px}
+  .app:not(.tv-mode) .play-layout{width:100%;max-width:none;margin:auto;grid-template-columns:minmax(0,1fr) minmax(0,4fr);gap:0;align-items:center}
+  .app:not(.tv-mode) .scorecard{grid-column:1;grid-row:1;width:calc(100% - 20px);padding:clamp(10px,1.3vw,20px);align-self:center}
+  .app:not(.tv-mode) .arena{grid-column:2;grid-row:1;width:100%;display:flex;justify-content:center;align-items:center}
+  .app:not(.tv-mode) .board-wrap{width:min(100%,calc(max(180px,100dvh - 130px)*7/6));flex-shrink:0}
+  .app:not(.tv-mode) .scorecard .game-status{font-size:clamp(17px,1.7vw,26px)}
+  .app:not(.tv-mode) .scorecard .player-card{gap:8px;min-width:0}
+  .app:not(.tv-mode) .scorecard .player-card>div{min-width:0}
+  .app:not(.tv-mode) .scorecard .player-card strong{font-size:clamp(12px,1.1vw,16px)}
+  .app:not(.tv-mode) .scorecard .player-card small{font-size:10px}
+  .app:not(.tv-mode) .scorecard .player-card .token{width:clamp(18px,2vw,30px);height:clamp(18px,2vw,30px)}
+  .app:not(.tv-mode) .scorecard .player-card b{font-size:clamp(18px,1.8vw,28px)}
+}
+@media(min-width:761px) and (max-height:580px){
+  .app:not(.tv-mode){padding:10px 16px;gap:8px}
+  .app:not(.tv-mode) .scorecard{padding:10px;width:calc(100% - 16px)}
+  .app:not(.tv-mode) .board-wrap{width:min(100%,calc(max(170px,100dvh - 115px)*7/6))}
+}
