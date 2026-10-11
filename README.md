@@ -34,3 +34,13 @@ npm run build
 ```
 
 La carpeta dist contiene la web estática. La base relativa permite servirla bajo /4enRaya/. Los cambios locales no se publican automáticamente en GitHub Pages.
+
+## Xiaomi TV A 2025: prueba por Wi-Fi
+
+Este modelo incluye Chromecast integrado. Conecta TV y PC a la misma Wi-Fi, abre el juego en Chrome y usa el menú Transmitir para transmitir la pestaña a la Xiaomi.
+
+El botón **Conectar / probar TV** ofrece las instrucciones y un test visual: genera un código de cuatro cifras válido durante 60 segundos y una señal animada. Mira el código en la TV y confírmalo desde el PC. Si coincide, el juego muestra «Imagen confirmada por ti». Después coloca una ficha para comprobar que la imagen sigue actualizándose.
+
+Es una confirmación manual de la imagen transmitida, no una detección automática ni un test bidireccional del mando de la TV. No requiere servidor de red ni permisos de firewall: Chrome transmite la pestaña. La prueba caduca y los códigos incorrectos se rechazan. Sin una TV real conectada no se puede validar la transmisión física.
+
+Ficha oficial: https://www.mi.com/global/product/xiaomi-tv-a-43-2025/specs/

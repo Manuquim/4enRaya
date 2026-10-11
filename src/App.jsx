@@ -2,6 +2,7 @@
 import { createBoard, playMove } from './funciones/isWinner';
 import confetti from 'canvas-confetti';
 import './App.css';
+import TvConnection from './component/TvConnection';
 const names = { x: 'Coral', o: 'Ámbar' };
 const fresh = () => ({ board: createBoard(), turn: 'x', result: null, line: [], moves: 0, last: null });
 export default function App() {
@@ -46,6 +47,7 @@ export default function App() {
   return <main className={`app ${tv ? 'tv-mode' : ''}`}>
     <header className="topbar"><a className="brand" href="./"><span className="brand-mark">4</span> en raya<span className="accent">.</span></a><div className="header-actions"><button className="quiet" onClick={() => setHelp(!help)} aria-expanded={help}>Cómo jugar</button><button className="quiet" onClick={toggleTv}>{tv ? 'Salir de TV' : '▣ Vista TV'}</button></div></header>
     {help && <aside className="help"><strong>Una regla. Muchas posibilidades.</strong><p>Dos personas se turnan para dejar caer fichas. Conecta cuatro en horizontal, vertical o diagonal. Pulsa una columna, o usa Tab, las flechas y Enter.</p><p><strong>En tu TV:</strong> conecta el ordenador por HDMI o duplica la pantalla con la función de transmisión de tu dispositivo. Activa Vista TV para ampliar el tablero. Este botón no conecta por sí solo con el televisor.</p></aside>}
+    <TvConnection />
     <section className="intro"><span className="eyebrow">EL CLÁSICO, SIEMPRE A MANO</span><h1>Una más<span className="accent">.</span></h1><p>Dos colores. Cuatro fichas. Tu próxima jugada.</p></section>
     <div className="play-layout"><aside className="scorecard"><span className="eyebrow">EL DUELO</span><h2>Buen juego.</h2><p className="muted">Comparte pantalla.<br/>Desafía a alguien cerca.</p>
       {['x','o'].map(player => <div key={player} className={`player-card ${!game.result && game.turn === player ? 'active' : ''}`}><span className={`token ${player}`}/><div><strong>{names[player]}</strong><small>{!game.result && game.turn === player ? 'Tu turno' : `Jugador ${player === 'x' ? 1 : 2}`}</small></div><b>{scores[player]}</b></div>)}
