@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { checkChallenge, createChallenge } from '../funciones/tvTest';
 
 // The parent owns menu visibility and the confirmed TV view.
@@ -8,6 +8,12 @@ export default function TvConnection({ onConnected, onClose, onViewOnly }) {
   const [answer, setAnswer] = useState('');
   const [status, setStatus] = useState('idle');
   const [method, setMethod] = useState('cast');
+  const panel = useRef(null);
+  useEffect(() => {
+    const dialog = panel.current;
+    dialog.showModal();
+    return () => dialog.close();
+  }, []);
   useEffect(() => {
     if (!challenge || !['waiting', 'incorrect'].includes(status)) return;
     const timer = setTimeout(() => setStatus('expired'), Math.max(0, challenge.expiresAt - Date.now()));
@@ -27,7 +33,11 @@ export default function TvConnection({ onConnected, onClose, onViewOnly }) {
     if (result === 'confirmed') onConnected(method);
   }
 
-  return <section className="tv-connection" aria-label="Opciones de TV">
+  return <dialog ref={panel} className="tv-connection" aria-label="Opciones de TV" onCancel={event => { event.preventDefault(); onClose(); }} onClick={event => {
+    if (event.target !== event.currentTarget) return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) onClose();
+  }}>
     <div id="tv-connection-panel" className="help">
       <button className="quiet" onClick={onClose}>Cerrar opciones de TV</button>
       <h2>TV · Elige el modo</h2>
@@ -59,5 +69,5 @@ export default function TvConnection({ onConnected, onClose, onViewOnly }) {
       </details>
       </>}
     </div>
-  </section>;
+  </dialog>;
 }

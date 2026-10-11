@@ -57,3 +57,5 @@ npm run build
 ```
 
 La carpeta dist contiene la web estática. La base relativa permite servirla bajo /4enRaya/. Los cambios locales y la subida del código a GitHub no sustituyen por sí solos un proceso de despliegue de dist. Sin una TV real conectada no se puede validar la transmisión física.
+
+El panel TV es una ventana modal: se cierra al pulsar fuera de él, con Escape o con su botón de cierre. Mientras está abierto bloquea el tablero, de modo que el clic exterior no coloca fichas. El foco de teclado permanece dentro del panel.
