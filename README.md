@@ -6,6 +6,18 @@ Juego local para dos personas con React y Vite. Original: https://github.com/man
 
 El repositorio incluye **dist**, con el frontend precompilado. Funciona en Windows y Linux con **Node.js 18 o posterior**. No necesitas `npm install`, Vite ni la carpeta node_modules. El servidor utiliza solo funciones incluidas en Node.js y escucha únicamente en el propio PC. Para transmitir a la TV, usa la opción TV del juego.
 
+### Inicio rápido
+
+Descarga el ZIP desde **Code → Download ZIP** en GitHub y extrae su contenido. Con Node.js instalado:
+
+| Sistema | Iniciar | Apagar |
+| --- | --- | --- |
+| Windows | Doble clic en **run.vbs**; alternativa: **run.cmd** | Botón **Apagar juego** o **detener.cmd** |
+| Linux | **Run.desktop** si tu escritorio lo admite; alternativa: `sh iniciar.sh` | Botón **Apagar juego**, **Detener.desktop** o `sh detener.sh` |
+| Ambos, desde terminal | `node run` | `node run --stop` |
+
+El navegador se abre automáticamente y el servidor queda en segundo plano. No tienes que mantener una terminal abierta.
+
 ### Un único archivo run para Windows y Linux
 
 El mismo ZIP sirve para ambos sistemas. Una vez extraído, abre una terminal en la carpeta que contiene el archivo **run** y ejecuta:
@@ -35,11 +47,7 @@ El ZIP del repositorio incluye todo lo necesario para jugar, excepto Node.js. Si
 2. Abre la carpeta extraída donde aparece **run.vbs**.
 3. Haz doble clic en **run.vbs**. Arranca el servidor oculto y abre el navegador, sin escribir comandos ni mantener PowerShell abierto. Necesitas Node.js instalado previamente.
 4. Si Windows no admite scripts VBS, usa **run.cmd** o **iniciar.cmd**: abren una consola breve que se cierra al iniciar; en caso de error permanece abierta para mostrarlo.
-5. Para detener el servidor, ejecuta **detener.cmd**. Cerrar la pestaña del navegador no detiene el servidor.
-
-También puedes pulsar **Apagar juego** dentro del juego: aparece debajo de Nueva partida en PC y junto a la desconexión en la vista TV. Detiene el proceso del servidor local, cierra sus conexiones y libera su puerto (8080 por defecto). Después aparece una pantalla de juego apagado; para volver, ejecuta el lanzador. Solo afecta al servidor del juego. La transmisión de Chrome/Windows y la pestaña del navegador deben cerrarse aparte.
-
-El botón requiere el lanzador local actualizado: en GitHub Pages o en otro alojamiento estático no hay un proceso local que la web pueda apagar. Si no se puede detener el servidor se muestra un aviso, sin simular un apagado.
+5. Para finalizar, pulsa **Apagar juego** en la página o ejecuta **detener.cmd**.
 
 ### Linux
 
@@ -54,9 +62,25 @@ sh iniciar.sh
 ```
 
 4. El navegador se abre automáticamente. Puedes cerrar la terminal.
-5. Para detener el servidor, abre **Detener.desktop** si tu escritorio lo admite, o ejecuta `sh detener.sh` o `node run --stop`.
+5. Para finalizar, pulsa **Apagar juego** en la página. También puedes abrir **Detener.desktop** si tu escritorio lo admite, o ejecutar `sh detener.sh` o `node run --stop`.
 
 No necesitas dar permisos de ejecución si lo lanzas con `sh iniciar.sh`. También puedes ejecutar `node run` desde la carpeta del proyecto, tanto en Linux como en Windows.
+
+### Apagar el juego y liberar el puerto
+
+El botón **Apagar juego** funciona en Windows y Linux con el lanzador local actualizado. Está debajo de **Nueva partida** en el panel izquierdo y junto a la desconexión en la vista TV.
+
+Al pulsarlo:
+
+1. Detiene el proceso del servidor del juego.
+2. Cierra sus conexiones y libera el puerto **8080**, o el puerto configurado.
+3. Muestra **Juego apagado**. Puedes cerrar la pestaña; para volver a jugar, abre de nuevo el lanzador.
+
+Solo se detiene el proceso del juego: no se terminan otros programas ni servicios. Cerrar la pestaña por sí solo no detiene el servidor. Si estabas transmitiendo a la TV, detén también la transmisión desde Chrome o Windows.
+
+Si no puedes acceder a la página, usa el lanzador de apagado de tu sistema o `node run --stop`. El comando también se puede ejecutar si el servidor ya está detenido.
+
+En **GitHub Pages**, un servidor estático o el modo de desarrollo con Vite, el botón no puede apagar el servidor local del lanzador y muestra un aviso. Para usar esta función, descarga el ZIP actualizado y arranca con Run. Si actualizas una copia que estaba abierta, detén primero el servidor anterior.
 
 ### Si no se abre
 
@@ -129,4 +153,6 @@ npm run build
 
 La carpeta dist contiene la web estática y se incluye en Git. La base relativa permite servirla bajo /4enRaya/. Después de modificar el código, ejecuta `npm run build` y sube también los cambios de dist para actualizar la versión precompilada. La subida a GitHub no sustituye por sí sola el despliegue del contenido de dist. Sin una TV real conectada no se puede validar la transmisión física.
 
-El panel TV es una ventana modal: se cierra al pulsar fuera de él, con Escape o con su botón de cierre. Mientras está abierto bloquea el tablero, de modo que el clic exterior no coloca fichas. El foco de teclado permanece dentro del panel.
+Los paneles **TV** y **Cómo jugar** son ventanas modales: se cierran al pulsar fuera, con Escape o con su botón de cierre. Mientras están abiertos bloquean el tablero, de modo que el clic exterior no coloca fichas. El foco de teclado permanece dentro del panel.
+
+Las pruebas incluyen la lógica de juego, el test visual de TV y el ciclo del servidor: arranque en segundo plano, reutilización sin duplicar procesos, rechazo de apagados sin autorización, terminación del proceso y disponibilidad del puerto después de apagar.
