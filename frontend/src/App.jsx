@@ -53,7 +53,7 @@ export default function App() {
     const complete = col => {
       if (active && version === computerVersion.current) applyMove(col, 'computer');
     };
-    const fallback = () => complete(computerMove(game.board, 'easy'));
+    const fallback = () => complete(computerMove(game.board, difficulty));
     const timer = setTimeout(() => {
       try {
         worker = new Worker(new URL('./funciones/computer.worker.js', import.meta.url), { type: 'module' });
@@ -142,7 +142,7 @@ export default function App() {
       {!isTv && <div className="match-settings">
         <label htmlFor="match-mode">Jugadores</label>
         <select id="match-mode" value={mode} disabled={Boolean(game.result)} onChange={event => changeSettings(event.target.value, difficulty)}><option value="single">1 jugador · contra IA</option><option value="two">2 jugadores · local</option></select>
-        {mode === 'single' && <><label htmlFor="ai-level">Dificultad</label><select id="ai-level" value={difficulty} disabled={Boolean(game.result)} onChange={event => changeSettings(mode, event.target.value)}><option value="easy">Fácil</option><option value="normal">Normal</option><option value="hard">Difícil</option></select></>}
+        {mode === 'single' && <><label htmlFor="ai-level">Dificultad</label><select id="ai-level" value={difficulty} disabled={Boolean(game.result)} onChange={event => changeSettings(mode, event.target.value)}><option value="easy">Fácil · 2 niveles</option><option value="normal">Normal · 3 niveles</option><option value="hard">Difícil · 4 niveles</option></select></>}
         <small>{game.result ? 'Pulsa Jugar otra vez para iniciar una nueva partida.' : 'Cambiar estas opciones inicia partida y marcador.'}</small>
       </div>}
       <h2>Marcador</h2>

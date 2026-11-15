@@ -10,12 +10,12 @@ test('AI takes a win before blocking an opponent', () => {
   for (const level of ['easy', 'normal', 'hard']) assert.equal(computerMove(board, level), 3);
 });
 
-test('normal and hard AI block horizontal and vertical wins', () => {
+test('all three search levels block horizontal and vertical wins', () => {
   const horizontal = createBoard();
   horizontal[5] = ['x', 'x', 'W', 'x', 'o', 'W', 'o'];
   const vertical = createBoard();
   for (let r = 3; r < 6; r++) vertical[r][6] = 'x';
-  for (const level of ['normal', 'hard']) {
+  for (const level of ['easy', 'normal', 'hard']) {
     assert.equal(computerMove(horizontal, level), 2);
     assert.equal(computerMove(vertical, level), 6);
   }
@@ -36,7 +36,7 @@ test('AI plays the only free column without modifying the board', () => {
   assert.equal(computerMove(board), null);
   board[0][2] = 'W';
   const original = structuredClone(board);
-  for (const level of ['easy', 'normal', 'hard']) assert.equal(computerMove(board, level, () => 0.5), 2);
+  for (const level of ['easy', 'normal', 'hard']) assert.equal(computerMove(board, level), 2);
   assert.deepEqual(board, original);
 });
 

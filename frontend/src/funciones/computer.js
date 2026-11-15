@@ -26,7 +26,7 @@ function evaluate(board) {
 }
 
 // Local minimax with alpha-beta pruning. All moves use copies of the board.
-export function computerMove(board, difficulty = 'normal', random = Math.random) {
+export function computerMove(board, difficulty = 'normal') {
   const legal = ORDER.filter(col => board[0][col] === 'W');
   if (!legal.length) return null;
   for (let r = 0; r < 6; r++) for (let c = 0; c < 7; c++) {
@@ -34,11 +34,11 @@ export function computerMove(board, difficulty = 'normal', random = Math.random)
   }
   const win = legal.find(col => playMove(board, col, 'o').line.length);
   if (win !== undefined) return win;
-  if (difficulty === 'easy') return legal[Math.min(legal.length - 1, Math.max(0, Math.floor(random() * legal.length)))];
   const block = legal.find(col => playMove(board, col, 'x').line.length);
   if (block !== undefined) return block;
 
-  const depth = difficulty === 'hard' ? 6 : 4;
+  // A level is one individual move, starting with the AI's candidate move.
+  const depth = { easy: 2, normal: 3, hard: 4 }[difficulty] ?? 3;
   function search(position, remaining, player, alpha, beta) {
     const columns = ORDER.filter(col => position[0][col] === 'W');
     if (!columns.length) return 0;
