@@ -8,7 +8,7 @@ El repositorio incluye **dist**, con el frontend precompilado. Funciona en Windo
 
 ### Inicio rápido
 
-Descarga el paquete precompilado desde [Releases de GitHub](https://github.com/Manuquim/4enRaya/releases): [Windows](https://github.com/Manuquim/4enRaya/releases/download/v1.1.1/cuatro-en-raya-windows.zip) o [Linux](https://github.com/Manuquim/4enRaya/releases/download/v1.1.1/cuatro-en-raya-linux.zip). Extrae el ZIP completo. Necesitas Node.js instalado previamente.
+Descarga el paquete precompilado desde [Releases de GitHub](https://github.com/Manuquim/4enRaya/releases): [Windows](https://github.com/Manuquim/4enRaya/releases/download/v1.1.2/cuatro-en-raya-windows.zip) o [Linux](https://github.com/Manuquim/4enRaya/releases/download/v1.1.2/cuatro-en-raya-linux.zip). Extrae el ZIP completo. Necesitas Node.js instalado previamente.
 
 La carpeta extraída solo muestra el lanzador y una carpeta app:
 
@@ -128,12 +128,14 @@ Abre la dirección que muestra Vite. Desde otro dispositivo en la misma red, usa
 
 El selector **Jugadores**, en el panel izquierdo, permite elegir:
 
-- **1 jugador · contra IA** (modo inicial): tú juegas con Coral y empiezas; el ordenador responde con Ámbar.
+- **1 jugador · contra IA** (modo inicial): tú juegas con Coral y el ordenador con Ámbar. En **Quién empieza** eliges **Jugador · Tú** o **IA · Ordenador**. Si eliges la IA, coloca automáticamente la primera ficha. Nueva partida conserva esta elección.
 - **2 jugadores · local**: dos personas comparten el mismo dispositivo y alternan sus turnos. No sincroniza partidas entre móviles.
 
 En solitario puedes elegir **Fácil (2 niveles)**, **Normal (3 niveles)** o **Difícil (4 niveles)**. Los tres usan minimax con poda alfa-beta para buscar victorias y bloquear amenazas. Un nivel corresponde a una jugada individual: la candidata de la IA es el primer nivel, la respuesta del jugador el segundo, y así sucesivamente. Las ramas terminan antes si hay victoria o empate. La IA se ejecuta localmente, sin servicios externos, claves de API ni conexión a Internet. El cálculo se ejecuta en un Web Worker para mantener la interfaz disponible; si el navegador no lo admite, se mantiene la misma profundidad mediante un cálculo local.
 
-Durante el turno del ordenador aparece **IA pensando…** y se bloquea la entrada de fichas. Nueva partida cancela cualquier respuesta pendiente. Cambiar el modo o la dificultad durante una partida reinicia el tablero y pone el marcador a cero.
+Si empiezas tú, pulsa directamente una columna para dejar caer la primera ficha: no hay que pulsar un botón de inicio. Si empieza la IA, su primera jugada es automática.
+
+Durante el turno del ordenador aparece **IA pensando…** y se bloquea la entrada de fichas. Nueva partida cancela cualquier respuesta pendiente. Cambiar el modo, la dificultad o quién empieza durante una partida reinicia el tablero y pone el marcador a cero. En el modo de dos jugadores locales empieza Coral.
 
 Pulsa un hueco o la flecha de una columna. Con teclado: Tab para enfocar, flechas para cambiar columna, Enter o espacio para jugar. Conecta cuatro en horizontal, vertical o diagonal. Al terminar se bloquea el tablero y se resalta la línea ganadora.
 

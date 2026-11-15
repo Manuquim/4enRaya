@@ -1,6 +1,6 @@
 import { createBoard, playMove } from './isWinner.js';
 
-export const freshGame = () => ({ board: createBoard(), turn: 'x', result: null, line: [], moves: 0, last: null });
+export const freshGame = (starter = 'x') => ({ board: createBoard(), turn: starter === 'o' ? 'o' : 'x', result: null, line: [], moves: 0, last: null });
 
 export function advanceGame(game, col, mode = 'two', actor = 'human') {
   if (game.result) return game;

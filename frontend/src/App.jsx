@@ -12,6 +12,7 @@ export default function App() {
   const [game, setGame] = useState(freshGame);
   const [mode, setMode] = useState('single');
   const [difficulty, setDifficulty] = useState('normal');
+  const [starter, setStarter] = useState('x');
   const [scores, setScores] = useState({ x: 0, o: 0, draw: 0 });
   const [selected, setSelected] = useState(3);
   const [tv, setTv] = useState(false);
@@ -70,14 +71,15 @@ export default function App() {
     if (game.board[0][col] !== 'W' && !game.result) { setNotice('Columna llena. Elige otra.'); return; }
     applyMove(col);
   }
-  function reset() {
+  function resetRound(first) {
     computerVersion.current++;
     lock.current = false;
-    setGame(freshGame()); setNotice('');
+    setGame(freshGame(first)); setNotice('');
   }
-  function changeSettings(nextMode, nextDifficulty) {
-    reset();
-    setMode(nextMode); setDifficulty(nextDifficulty);
+  function reset() { resetRound(mode === 'single' ? starter : 'x'); }
+  function changeSettings(nextMode, nextDifficulty, nextStarter = starter) {
+    resetRound(nextMode === 'single' ? nextStarter : 'x');
+    setMode(nextMode); setDifficulty(nextDifficulty); setStarter(nextStarter);
     setScores({ x: 0, o: 0, draw: 0 });
   }
   async function toggleTv() {
@@ -143,6 +145,7 @@ export default function App() {
         <label htmlFor="match-mode">Jugadores</label>
         <select id="match-mode" value={mode} disabled={Boolean(game.result)} onChange={event => changeSettings(event.target.value, difficulty)}><option value="single">1 jugador · contra IA</option><option value="two">2 jugadores · local</option></select>
         {mode === 'single' && <><label htmlFor="ai-level">Dificultad</label><select id="ai-level" value={difficulty} disabled={Boolean(game.result)} onChange={event => changeSettings(mode, event.target.value)}><option value="easy">Fácil · 2 niveles</option><option value="normal">Normal · 3 niveles</option><option value="hard">Difícil · 4 niveles</option></select></>}
+        {mode === 'single' && <><label htmlFor="first-player">Quién empieza</label><select id="first-player" value={starter} disabled={Boolean(game.result)} onChange={event => changeSettings(mode, difficulty, event.target.value)}><option value="x">Jugador · Tú</option><option value="o">IA · Ordenador</option></select></>}
         <small>{game.result ? 'Pulsa Jugar otra vez para iniciar una nueva partida.' : 'Cambiar estas opciones inicia partida y marcador.'}</small>
       </div>}
       <h2>Marcador</h2>

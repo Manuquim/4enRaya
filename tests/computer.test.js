@@ -61,6 +61,23 @@ test('solo game rejects human moves during the AI turn and AI moves during the h
   assert.equal(initial.moves, 0);
 });
 
+test('the AI can open a new game and then passes the turn to the human', () => {
+  const initial = freshGame('o');
+  assert.equal(initial.turn, 'o');
+  assert.equal(initial.moves, 0);
+  assert.equal(advanceGame(initial, 0, 'single'), initial);
+  for (const difficulty of ['easy', 'normal', 'hard']) {
+    const col = computerMove(initial.board, difficulty);
+    const game = advanceGame(initial, col, 'single', 'computer');
+    assert.equal(game.moves, 1);
+    assert.equal(game.turn, 'x');
+    assert.equal(game.board.flat().filter(cell => cell === 'o').length, 1);
+    assert.equal(game.board.flat().filter(cell => cell === 'x').length, 0);
+  }
+  assert.equal(freshGame('o').turn, 'o');
+  assert.equal(freshGame('x').turn, 'x');
+});
+
 test('two local players can still alternate and terminal games reject all further moves', () => {
   let game = freshGame();
   for (const col of [0, 1, 0, 1, 0, 1, 0]) game = advanceGame(game, col, 'two');
