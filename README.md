@@ -1,6 +1,6 @@
 # 4 en raya · Una más
 
-Juego local para dos personas con React y Vite. Original: https://github.com/manuquim/4enRaya
+Cuatro en raya para un jugador contra IA o dos personas en el mismo dispositivo. Creado con React y Vite. Original: https://github.com/manuquim/4enRaya
 
 ## Jugar sin instalar paquetes
 
@@ -8,7 +8,7 @@ El repositorio incluye **dist**, con el frontend precompilado. Funciona en Windo
 
 ### Inicio rápido
 
-Descarga el paquete precompilado desde [Releases de GitHub](https://github.com/Manuquim/4enRaya/releases): [Windows](https://github.com/Manuquim/4enRaya/releases/download/v1.0.1/cuatro-en-raya-windows.zip) o [Linux](https://github.com/Manuquim/4enRaya/releases/download/v1.0.1/cuatro-en-raya-linux.zip). Extrae el ZIP completo. Necesitas Node.js instalado previamente.
+Descarga el paquete precompilado desde [Releases de GitHub](https://github.com/Manuquim/4enRaya/releases): [Windows](https://github.com/Manuquim/4enRaya/releases/download/v1.1.0/cuatro-en-raya-windows.zip) o [Linux](https://github.com/Manuquim/4enRaya/releases/download/v1.1.0/cuatro-en-raya-linux.zip). Extrae el ZIP completo. Necesitas Node.js instalado previamente.
 
 La carpeta extraída solo muestra el lanzador y una carpeta app:
 
@@ -126,7 +126,18 @@ Abre la dirección que muestra Vite. Desde otro dispositivo en la misma red, usa
 
 ## Jugar
 
+El selector **Jugadores**, en el panel izquierdo, permite elegir:
+
+- **1 jugador · contra IA** (modo inicial): tú juegas con Coral y empiezas; el ordenador responde con Ámbar.
+- **2 jugadores · local**: dos personas comparten el mismo dispositivo y alternan sus turnos. No sincroniza partidas entre móviles.
+
+En solitario puedes elegir **Fácil**, **Normal** o **Difícil**. La IA se ejecuta localmente, sin servicios externos, claves de API ni conexión a Internet. Fácil elige columnas libres y aprovecha victorias inmediatas. Normal y difícil buscan victorias, bloquean amenazas y utilizan minimax con poda alfa-beta, analizando hasta 4 o 6 movimientos respectivamente. El cálculo se ejecuta en un Web Worker para mantener la interfaz disponible. Si el navegador no admite el Worker, se usa una respuesta local sencilla.
+
+Durante el turno del ordenador aparece **IA pensando…** y se bloquea la entrada de fichas. Nueva partida cancela cualquier respuesta pendiente. Cambiar el modo o la dificultad durante una partida reinicia el tablero y pone el marcador a cero.
+
 Pulsa un hueco o la flecha de una columna. Con teclado: Tab para enfocar, flechas para cambiar columna, Enter o espacio para jugar. Conecta cuatro en horizontal, vertical o diagonal. Al terminar se bloquea el tablero y se resalta la línea ganadora.
+
+**Al ganar o empatar, las fichas se mantienen fijas hasta pulsar Jugar otra vez.** No hay reinicio automático ni jugadas de la IA tras el resultado. Los selectores se bloquean al terminar para conservar la partida visible. Reiniciar marcador y partida también inicia una partida nueva de forma explícita.
 
 Nueva partida conserva el marcador. Reiniciar marcador y partida lo pone a cero. El marcador dura mientras la página esté abierta.
 
@@ -161,6 +172,8 @@ Guías oficiales:
 
 ## Validación y compilación
 
+El proyecto se organiza en **frontend/** (React, estilos, reglas y rival IA) y **backend/** (servidor local). **scripts/** contiene los lanzadores y el empaquetado; **dist/**, el frontend compilado. El rival se calcula en el navegador, no en el backend.
+
 ```sh
 npm test
 npm run lint
@@ -173,4 +186,4 @@ Para generar los paquetes compactos después de compilar, ejecuta `node scripts/
 
 Los paneles **TV** y **Cómo jugar** son ventanas modales: se cierran al pulsar fuera, con Escape o con su botón de cierre. Mientras están abiertos bloquean el tablero, de modo que el clic exterior no coloca fichas. El foco de teclado permanece dentro del panel.
 
-Las pruebas incluyen la lógica de juego, el test visual de TV y el ciclo del servidor: arranque en segundo plano, reutilización sin duplicar procesos, rechazo de apagados sin autorización, terminación del proceso y disponibilidad del puerto después de apagar.
+Las pruebas incluyen la lógica de juego, victorias y bloqueos de la IA, turnos de ambos modos, partidas completas y conservación del tablero final, además del test visual de TV y el ciclo del servidor: arranque en segundo plano, reutilización sin duplicar procesos, rechazo de apagados sin autorización, terminación del proceso y disponibilidad del puerto después de apagar.

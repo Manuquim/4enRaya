@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { createChallenge, checkChallenge, TEST_DURATION } from '../src/funciones/tvTest.js';
+import { createChallenge, checkChallenge, TEST_DURATION } from '../frontend/src/funciones/tvTest.js';
 
 test('challenge has four digits and expires after sixty seconds', () => {
   const challenge = createChallenge(1000);

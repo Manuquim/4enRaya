@@ -7,7 +7,7 @@ import { randomUUID } from 'node:crypto';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const stage = join(root, '.distribution', randomUUID());
-const runtimeFiles = ['dist', 'run', 'run.cmd', 'iniciar.cmd', 'iniciar.sh', 'detener.cmd', 'detener.sh', 'Detener.desktop', 'README.md'];
+const runtimeFiles = ['dist', 'backend', 'run', 'run.cmd', 'iniciar.cmd', 'iniciar.sh', 'detener.cmd', 'detener.sh', 'Detener.desktop', 'README.md'];
 const execute = promisify(execFile);
 const quotePs = value => "'" + value.replaceAll("'", "''") + "'";
 for (const platform of ['windows', 'linux']) {

@@ -17,7 +17,8 @@ export default function HowToPlay({ onClose }) {
     <div className="help">
       <button className="quiet" onClick={onClose}>Cerrar cómo jugar</button>
       <h2 id="how-to-play-title">Una regla. Muchas posibilidades.</h2>
-      <p>Dos personas se turnan para dejar caer fichas. Conecta cuatro en horizontal, vertical o diagonal.</p>
+      <p>Elige 1 jugador contra IA o 2 jugadores locales en el panel izquierdo. Conecta cuatro en horizontal, vertical o diagonal.</p>
+      <p>En solitario juegas con Coral y empiezas tú. La IA usa Ámbar y responde automáticamente. Puedes elegir dificultad fácil, normal o difícil. Cambiar modo o dificultad reinicia partida y marcador.</p>
       <p>Pulsa una columna para jugar. Con teclado, usa Tab para enfocar una columna, las flechas para cambiar de columna y Enter o espacio para soltar una ficha.</p>
       <p><strong>En tu TV:</strong> abre <strong>Menú → TV</strong> y elige tu modo de conexión o la vista ampliada.</p>
     </div>

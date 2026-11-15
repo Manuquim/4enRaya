@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { createBoard, playMove, winningLine, tablas } from '../src/funciones/isWinner.js';
+import { createBoard, playMove, winningLine, tablas } from '../frontend/src/funciones/isWinner.js';
 test('gravity, immutable rows, full-column and invalid-column rejection', () => {
   const original = createBoard();
   let board = original;
